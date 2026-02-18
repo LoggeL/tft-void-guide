@@ -1885,7 +1885,11 @@
     </div>
 
     <div class="board-tabs reveal">
-      <button class="board-tab active" onclick="switchBoard('lvl6', this)">
+      <button class="board-tab active" onclick="switchBoard('lvl4', this)">
+        LVL 4
+        <span class="tab-sub">Early Opener</span>
+      </button>
+      <button class="board-tab" onclick="switchBoard('lvl6', this)">
         LVL 6
         <span class="tab-sub">Early</span>
       </button>
@@ -1903,10 +1907,10 @@
       </button>
     </div>
 
-    <!-- LVL 6 BOARD -->
-    <div class="board-state active" id="board-lvl6">
+    <!-- LVL 4 BOARD -->
+    <div class="board-state active" id="board-lvl4">
       <div class="board-note-wrap">
-        <span class="board-note">4× VOID ACTIVE — KOG'MAW + MALZAHAR BACKLINE, CHO + REK'SAI FRONT</span>
+        <span class="board-note">2 Void active — start the Rift Herald counter</span>
       </div>
       <div class="board-wrapper reveal">
         <div class="hex-board-container">
@@ -1915,9 +1919,9 @@
             <div class="hex-row offset">
               <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
               <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
-              <!-- c3 MAL (mirror of c5) --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_malzahar/hud/tft16_malzahar_square.tft_set16.png" alt="Malzahar" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">MAL</span></div>
-              <!-- c4 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
-              <!-- c5 KOG (mirror of c3) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 KOG --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
               <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
               <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
             </div>
@@ -1945,6 +1949,59 @@
             <div class="hex-row">
               <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
               <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 REK --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">REK</span></div>
+              <!-- c4 CHO --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_chogath/hud/tft16_chogath_square.tft_set16.png" alt="Cho'Gath" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CHO</span></div>
+              <!-- c5 BLZ --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_blitzcrank/hud/tft16_blitzcrank_square.tft_set16.png" alt="Blitzcrank" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">BLZ</span></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LVL 6 BOARD -->
+    <div class="board-state" id="board-lvl6">
+      <div class="board-note-wrap">
+        <span class="board-note">4 Void active — Rift Herald counter running</span>
+      </div>
+      <div class="board-wrapper reveal">
+        <div class="hex-board-container">
+          <div class="hex-board">
+            <!-- Row 4 (back) — HTML order first = visually top (column-reverse) — even row → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 MAL (mirror of c5) --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_malzahar/hud/tft16_malzahar_square.tft_set16.png" alt="Malzahar" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">MAL</span></div>
+              <!-- c4 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c5 KOG (mirror of c3) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 CAI --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_caitlyn/hud/tft16_caitlyn_square.tft_set16.png" alt="Caitlyn" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CAI</span></div>
+            </div>
+            <!-- Row 3 — odd → no offset -->
+            <div class="hex-row">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 2 — even → offset -->
+            <div class="hex-row offset">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 1 (front) — odd → no offset -->
+            <div class="hex-row">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 BLZ --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_blitzcrank/hud/tft16_blitzcrank_square.tft_set16.png" alt="Blitzcrank" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">BLZ</span></div>
               <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
               <!-- c4 REK (center) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">REK</span></div>
               <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
