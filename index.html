@@ -40,7 +40,10 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    font-size: 19px;
+  }
 
   body {
     background: var(--void-deep);
@@ -109,7 +112,7 @@
     position: relative;
     z-index: 10;
     text-align: center;
-    padding: 2rem;
+    padding: 2.5rem;
   }
 
   .classified-stamp {
@@ -117,13 +120,13 @@
     border: 3px solid var(--danger);
     color: var(--danger);
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 900;
     letter-spacing: 0.4em;
-    padding: 0.3rem 1.2rem;
+    padding: 0.4rem 1.5rem;
     transform: rotate(-4deg);
     opacity: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     text-shadow: 0 0 10px rgba(239,68,68,0.5);
     box-shadow: 0 0 12px rgba(239,68,68,0.3), inset 0 0 12px rgba(239,68,68,0.05);
     animation: stampIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
@@ -136,17 +139,17 @@
 
   .hero-eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     color: var(--cyan-bright);
     letter-spacing: 0.3em;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     opacity: 0;
     animation: fadeSlideUp 0.6s ease 0.8s forwards;
   }
 
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 10vw, 8rem);
+    font-size: clamp(3.5rem, 12vw, 10rem);
     font-weight: 900;
     letter-spacing: 0.05em;
     line-height: 0.9;
@@ -208,10 +211,10 @@
 
   .hero-subtitle {
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     letter-spacing: 0.2em;
-    margin: 1.5rem 0 3rem;
+    margin: 2rem 0 3.5rem;
     opacity: 0;
     animation: fadeSlideUp 0.6s ease 1.2s forwards;
   }
@@ -294,31 +297,31 @@
      SECTION WRAPPERS
   ══════════════════════════════════════════ */
   .section {
-    padding: 6rem 2rem;
-    max-width: 1200px;
+    padding: 8rem 2.5rem;
+    max-width: 1400px;
     margin: 0 auto;
   }
 
   .section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
   }
 
   .section-tag {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     letter-spacing: 0.35em;
     color: var(--cyan-bright);
     border: 1px solid rgba(6,182,212,0.3);
-    padding: 0.25rem 0.75rem;
-    margin-bottom: 1rem;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.25rem;
     background: rgba(6,182,212,0.05);
   }
 
   .section-title {
     font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-size: clamp(2.2rem, 5vw, 3.75rem);
     font-weight: 700;
     letter-spacing: 0.06em;
     background: linear-gradient(135deg, #e2e8f0 0%, #a78bfa 100%);
@@ -352,23 +355,23 @@
     background: linear-gradient(180deg, rgba(91,33,182,0.15) 0%, transparent 100%);
     border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
-    padding: 1.5rem 2rem;
+    padding: 2rem 2.5rem;
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 2.5rem;
     flex-wrap: wrap;
   }
 
   .trait-pill {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     background: rgba(139,92,246,0.1);
     border: 1px solid rgba(139,92,246,0.3);
     border-radius: 2px;
-    padding: 0.4rem 1rem;
+    padding: 0.55rem 1.3rem;
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 1.15rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     color: var(--purple-glow);
@@ -406,8 +409,8 @@
 
   .champions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
   }
 
   .champ-card {
@@ -415,7 +418,7 @@
     background: var(--void-card);
     border: 1px solid var(--border-subtle);
     border-radius: 4px;
-    padding: 1.25rem 1rem;
+    padding: 1.6rem 1.25rem;
     text-align: center;
     cursor: default;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -452,15 +455,15 @@
   .champ-card:hover::after  { transform: scaleX(1); }
 
   .champ-avatar {
-    width: 64px;
-    height: 64px;
+    width: 78px;
+    height: 78px;
     border-radius: 50%;
-    margin: 0 auto 0.75rem;
+    margin: 0 auto 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 900;
     position: relative;
     overflow: hidden;
@@ -516,7 +519,7 @@
 
   .champ-name {
     font-family: var(--font-heading);
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     color: var(--text-primary);
@@ -525,9 +528,9 @@
 
   .champ-role {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     letter-spacing: 0.15em;
-    padding: 0.15rem 0.5rem;
+    padding: 0.2rem 0.65rem;
     border-radius: 2px;
     display: inline-block;
   }
@@ -569,13 +572,13 @@
 
   .timeline {
     position: relative;
-    max-width: 700px;
+    max-width: 860px;
     margin: 0 auto;
   }
 
   .timeline-track {
     position: absolute;
-    left: 40px;
+    left: 50px;
     top: 0; bottom: 0;
     width: 2px;
     background: linear-gradient(180deg, var(--purple-bright) 0%, var(--cyan-bright) 100%);
@@ -587,22 +590,22 @@
 
   .timeline-item {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     align-items: flex-start;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     position: relative;
   }
 
   .timeline-node {
     flex-shrink: 0;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-size: 1.3rem;
+    font-size: 1.65rem;
     font-weight: 900;
     position: relative;
     z-index: 2;
@@ -625,7 +628,7 @@
     background: var(--void-card);
     border: 1px solid var(--border-subtle);
     border-radius: 4px;
-    padding: 1.25rem 1.5rem;
+    padding: 1.6rem 2rem;
     backdrop-filter: blur(10px);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     margin-top: 10px;
@@ -638,7 +641,7 @@
 
   .timeline-content h3 {
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     color: var(--text-primary);
@@ -646,7 +649,7 @@
   }
 
   .timeline-content p {
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     line-height: 1.6;
   }
@@ -678,8 +681,8 @@
 
   .stages-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 2rem;
   }
 
   .stage-card {
@@ -698,19 +701,19 @@
   }
 
   .stage-header {
-    padding: 1.25rem 1.5rem;
+    padding: 1.6rem 2rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
     border-bottom: 1px solid var(--border-subtle);
   }
 
   .stage-badge {
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    padding: 0.3rem 0.7rem;
+    padding: 0.4rem 0.9rem;
     border-radius: 2px;
     flex-shrink: 0;
   }
@@ -721,7 +724,7 @@
 
   .stage-title {
     font-family: var(--font-heading);
-    font-size: 1.15rem;
+    font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     color: var(--text-primary);
@@ -729,26 +732,26 @@
 
   .stage-icon {
     margin-left: auto;
-    font-size: 1.4rem;
+    font-size: 1.75rem;
     opacity: 0.7;
   }
 
   .stage-body {
-    padding: 1.25rem 1.5rem;
+    padding: 1.6rem 2rem;
   }
 
   .stage-body ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.8rem;
   }
 
   .stage-body li {
     display: flex;
     align-items: flex-start;
-    gap: 0.6rem;
-    font-size: 0.875rem;
+    gap: 0.75rem;
+    font-size: 1rem;
     color: var(--text-secondary);
   }
 
@@ -773,7 +776,7 @@
   .items-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   @media (max-width: 640px) {
@@ -784,7 +787,7 @@
     background: var(--void-card);
     border: 1px solid var(--border-subtle);
     border-radius: 4px;
-    padding: 1.5rem;
+    padding: 2rem;
     backdrop-filter: blur(10px);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
@@ -803,10 +806,10 @@
   }
 
   .item-card-icon {
-    width: 40px; height: 40px;
+    width: 50px; height: 50px;
     border-radius: 4px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     background: rgba(6,182,212,0.1);
     border: 1px solid rgba(6,182,212,0.3);
     overflow: hidden;
@@ -820,8 +823,8 @@
   }
 
   .item-icon {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 4px;
     object-fit: cover;
     flex-shrink: 0;
@@ -830,7 +833,7 @@
 
   .item-card-title {
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     color: var(--text-primary);
@@ -852,8 +855,8 @@
   .item-row {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0.75rem;
+    gap: 0.9rem;
+    padding: 0.65rem 1rem;
     background: rgba(255,255,255,0.02);
     border-radius: 3px;
     border: 1px solid rgba(255,255,255,0.04);
@@ -878,7 +881,7 @@
 
   .item-name {
     font-family: var(--font-heading);
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--text-primary);
   }
@@ -895,7 +898,7 @@
   ══════════════════════════════════════════ */
   .win-banner {
     position: relative;
-    padding: 6rem 2rem;
+    padding: 8rem 2.5rem;
     text-align: center;
     overflow: hidden;
     background: linear-gradient(180deg,
@@ -933,7 +936,7 @@
 
   .win-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 5rem);
+    font-size: clamp(2.5rem, 7vw, 6.5rem);
     font-weight: 900;
     letter-spacing: 0.08em;
     background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 40%, #d97706 100%);
@@ -946,7 +949,7 @@
 
   .win-sub {
     font-family: var(--font-heading);
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     font-weight: 500;
     color: var(--text-secondary);
     letter-spacing: 0.1em;
@@ -965,13 +968,13 @@
   .win-step {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.65rem;
     background: rgba(245,158,11,0.08);
     border: 1px solid rgba(245,158,11,0.25);
     border-radius: 3px;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.4rem;
     font-family: var(--font-heading);
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #fcd34d;
     letter-spacing: 0.05em;
@@ -1052,14 +1055,14 @@
      FOOTER
   ══════════════════════════════════════════ */
   footer {
-    padding: 3rem 2rem;
+    padding: 4rem 2.5rem;
     text-align: center;
     border-top: 1px solid rgba(255,255,255,0.05);
   }
 
   footer p {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--text-dim);
     letter-spacing: 0.2em;
   }
@@ -1072,7 +1075,7 @@
      MOBILE
   ══════════════════════════════════════════ */
   @media (max-width: 768px) {
-    .section { padding: 4rem 1.25rem; }
+    .section { padding: 5rem 1.5rem; }
     .champions-grid {
       display: flex;
       overflow-x: auto;
@@ -1082,11 +1085,11 @@
       -webkit-overflow-scrolling: touch;
     }
     .champ-card {
-      min-width: 130px;
+      min-width: 155px;
       scroll-snap-align: start;
     }
-    .timeline-node { width: 56px; height: 56px; font-size: 1rem; }
-    .timeline-track { left: 28px; }
+    .timeline-node { width: 70px; height: 70px; font-size: 1.2rem; }
+    .timeline-track { left: 35px; }
     .stages-grid { grid-template-columns: 1fr; }
     .win-steps { flex-direction: column; align-items: center; }
     .traits-bar { gap: 0.75rem; }
@@ -1168,13 +1171,13 @@
     background: var(--void-card);
     border: 1px solid var(--border-subtle);
     border-radius: 4px;
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 2rem;
     backdrop-filter: blur(10px);
   }
 
   .stat-value {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.9rem;
     font-weight: 900;
     color: var(--purple-glow);
   }
@@ -1209,18 +1212,18 @@
 
   .board-tabs {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     flex-wrap: wrap;
   }
 
   .board-tab {
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    padding: 0.5rem 1.25rem;
+    padding: 0.75rem 1.75rem;
     border: 1px solid var(--border-subtle);
     background: rgba(13,16,32,0.6);
     color: var(--text-dim);
@@ -1245,7 +1248,7 @@
   .board-tab .tab-sub {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     font-weight: 400;
     letter-spacing: 0.15em;
     color: inherit;
