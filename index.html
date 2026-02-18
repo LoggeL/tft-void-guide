@@ -1491,6 +1491,14 @@
 </style>
 </head>
 <body>
+<button id="lang-toggle" onclick="toggleLang()"
+  style="position:fixed;top:1rem;right:1rem;z-index:9999;
+  background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.4);
+  color:#a78bfa;font-family:var(--font-display);font-size:0.8rem;
+  padding:0.5rem 1rem;border-radius:4px;cursor:pointer;
+  backdrop-filter:blur(8px);letter-spacing:0.1em;transition:all 0.2s;">
+  🇩🇪 DE
+</button>
 
 <!-- ── NAV ── -->
 <nav>
@@ -1534,7 +1542,7 @@
       </div>
     </div>
     <div class="scroll-cta" style="margin-top:3rem">
-      <span>SCROLL TO BRIEFING</span>
+      <span data-i18n="hero.scroll">SCROLL TO BRIEFING</span>
       <div class="scroll-arrow"></div>
     </div>
   </div>
@@ -1551,15 +1559,15 @@
 <div class="traits-bar">
   <div class="trait-pill">
     <span class="trait-count">9×</span>
-    VOID
+    <span data-i18n="trait.void">VOID</span>
   </div>
   <div class="trait-pill trait-cyan">
     <span class="trait-count">2×</span>
-    BRUISER
+    <span data-i18n="trait.bruiser">BRUISER</span>
   </div>
   <div class="trait-pill trait-cyan">
     <span class="trait-count">1×</span>
-    LONGSHOT
+    <span data-i18n="trait.longshot">LONGSHOT</span>
   </div>
 </div>
 <div class="glass-sep"></div>
@@ -1569,7 +1577,7 @@
   <div class="section">
     <div class="section-header reveal">
       <div class="section-tag">// 01 // ROSTER</div>
-      <h2 class="section-title">CHAMPION ROSTER</h2>
+      <h2 class="section-title" data-i18n="section.champions">CHAMPION ROSTER</h2>
     </div>
 
     <div class="champ-group-label reveal">▸ EARLY GAME — STAGE 2-3</div>
@@ -1707,7 +1715,7 @@
   <div class="section">
     <div class="section-header reveal">
       <div class="section-tag">// 02 // ECONOMY</div>
-      <h2 class="section-title">LEVELING GUIDE</h2>
+      <h2 class="section-title" data-i18n="section.leveling">LEVELING GUIDE</h2>
     </div>
 
     <div class="timeline">
@@ -1717,7 +1725,7 @@
         <div class="timeline-node node-green">4</div>
         <div class="timeline-content">
           <h3>LEVEL 4 — CONDITIONAL</h3>
-          <p>Level up if you have <strong>upgrades available</strong> + a good item component. Don't force it—eco first.</p>
+          <p data-i18n="lvl.4.cond">Level up if you have <strong>upgrades available</strong> + a good item component. Don't force it—eco first.</p>
         </div>
       </div>
 
@@ -1725,7 +1733,7 @@
         <div class="timeline-node node-green">5</div>
         <div class="timeline-content">
           <h3>LEVEL 5 — ALMOST ALWAYS</h3>
-          <p>Level to 5 <strong>always</strong> unless you're on a 3× loss streak and looking to eco hard.</p>
+          <p data-i18n="lvl.5.cond">Level to 5 <strong>always</strong> unless you're on a 3× loss streak and looking to eco hard.</p>
         </div>
       </div>
 
@@ -1733,7 +1741,7 @@
         <div class="timeline-node node-yellow">6</div>
         <div class="timeline-content">
           <h3>LEVEL 6 — WINSTREAK / RICH</h3>
-          <p>Level on <strong>4+ winstreak</strong> OR if you can maintain above <strong>40g</strong> after leveling.</p>
+          <p data-i18n="lvl.6.cond">Level on <strong>4+ winstreak</strong> OR if you can maintain above <strong>40g</strong> after leveling.</p>
         </div>
       </div>
 
@@ -1741,7 +1749,7 @@
         <div class="timeline-node node-yellow">7</div>
         <div class="timeline-content">
           <h3>LEVEL 7 — ECONOMY CHECK</h3>
-          <p>Level if you can stay <strong>above 30g</strong> after the investment. Preserve interest thresholds.</p>
+          <p data-i18n="lvl.7.cond">Level if you can stay <strong>above 30g</strong> after the investment. Preserve interest thresholds.</p>
         </div>
       </div>
 
@@ -1749,7 +1757,7 @@
         <div class="timeline-node node-red">8</div>
         <div class="timeline-content">
           <h3>LEVEL 8 — KEY POWER SPIKE</h3>
-          <p>Roll aggressively for <strong>Kai'Sa 2★</strong> and <strong>Rift Herald 2★</strong>. Push to Level 9 after hitting.</p>
+          <p data-i18n="lvl.8.cond">Roll aggressively for <strong>Kai'Sa 2★</strong> and <strong>Rift Herald 2★</strong>. Push to Level 9 after hitting.</p>
           <div class="tl-warning">⚠ DO NOT go below 10g while rolling</div>
         </div>
       </div>
@@ -1758,7 +1766,7 @@
         <div class="timeline-node node-purple">9</div>
         <div class="timeline-content">
           <h3>LEVEL 9 — HP DEPENDENT</h3>
-          <p>
+          <p data-i18n="lvl.9.cond">
             <strong>High HP →</strong> Wait until Stage 5-5 &nbsp;|&nbsp;
             <strong>Medium HP →</strong> Roll 20g first &nbsp;|&nbsp;
             <strong>Low HP →</strong> Level ASAP to stabilize with Wukong → Volibear
@@ -1770,7 +1778,7 @@
         <div class="timeline-node node-gold">10</div>
         <div class="timeline-content">
           <h3>LEVEL 10 — ENDGAME</h3>
-          <p>Only when carry is <strong>fully itemized + upgraded</strong>. Slot in <strong>Baron Nashor</strong>. Transfer best items + best Void mutation.</p>
+          <p data-i18n="lvl.10.cond">Only when carry is <strong>fully itemized + upgraded</strong>. Slot in <strong>Baron Nashor</strong>. Transfer best items + best Void mutation.</p>
         </div>
       </div>
 
@@ -1785,29 +1793,29 @@
   <div class="section">
     <div class="section-header reveal">
       <div class="section-tag">// 03 // STRATEGY</div>
-      <h2 class="section-title">STAGE BREAKDOWN</h2>
+      <h2 class="section-title" data-i18n="section.stages">STAGE BREAKDOWN</h2>
     </div>
 
     <div class="stages-grid">
       <div class="stage-card reveal reveal-delay-1">
         <div class="stage-header">
-          <div class="stage-badge badge-early">STAGE 2-3</div>
-          <div class="stage-title">Early Game</div>
+          <div class="stage-badge badge-early" data-i18n="stage.early.badge">STAGE 2-3</div>
+          <div class="stage-title" data-i18n="stage.early.title">Early Game</div>
           <div class="stage-icon">⚔</div>
         </div>
         <div class="stage-body">
           <ul>
-            <li><strong>Slam items aggressively</strong> — don't save components</li>
-            <li><em>Play for winstreak</em> to build gold interest buffer</li>
-            <li>Run Kog'Maw + Malzahar + Rek'Sai as core</li>
-            <li>Keep strongest available board — don't force economy at cost of HP</li>
+            <li data-i18n="stage.early.b1"><strong>Slam items aggressively</strong> — don't save components</li>
+            <li data-i18n="stage.early.b2"><em>Play for winstreak</em> to build gold interest buffer</li>
+            <li data-i18n="stage.early.b3">Run Kog'Maw + Malzahar + Rek'Sai as core</li>
+            <li data-i18n="stage.early.b4">Keep strongest available board — don't force economy at cost of HP</li>
           </ul>
           <div class="rift-unlock">
-            <div class="rift-unlock-title">🌀 RIFT HERALD UNLOCK</div>
+            <div class="rift-unlock-title" data-i18n="unlock.rift.title">🌀 RIFT HERALD UNLOCK</div>
             <ul>
-              <li>Have <strong>Void active</strong> for <strong>8 player combats</strong></li>
-              <li>No level requirement — auto-unlocks after 8 Void combats</li>
-              <li>Tip: <strong>2 Void units</strong> already activate the trait — get them on board ASAP to start the 8-combat counter</li>
+              <li data-i18n="unlock.rift.b1">Have <strong>Void active</strong> for <strong>8 player combats</strong></li>
+              <li data-i18n="unlock.rift.b2">No level requirement — auto-unlocks after 8 Void combats</li>
+              <li data-i18n="unlock.rift.b3">Tip: <strong>2 Void units</strong> already activate the trait — get them on board ASAP to start the 8-combat counter</li>
             </ul>
           </div>
         </div>
@@ -1815,32 +1823,32 @@
 
       <div class="stage-card reveal reveal-delay-2">
         <div class="stage-header">
-          <div class="stage-badge badge-mid">STAGE 4</div>
-          <div class="stage-title">Mid Game</div>
+          <div class="stage-badge badge-mid" data-i18n="stage.mid.badge">STAGE 4</div>
+          <div class="stage-title" data-i18n="stage.mid.title">Mid Game</div>
           <div class="stage-icon">🎯</div>
         </div>
         <div class="stage-body">
           <ul>
-            <li>Roll on <strong>Level 8</strong> for key 2-stars</li>
-            <li>Priority: <em>Kai'Sa 2★</em> first, then <em>Rift Herald 2★</em></li>
-            <li>Push to <strong>Level 9</strong> after stabilizing</li>
-            <li>Flex <em>Swain</em> or <em>Shyvana</em> if available</li>
-            <li>Never roll below 10g — interest matters</li>
+            <li data-i18n="stage.mid.b1">Roll on <strong>Level 8</strong> for key 2-stars</li>
+            <li data-i18n="stage.mid.b2">Priority: <em>Kai'Sa 2★</em> first, then <em>Rift Herald 2★</em></li>
+            <li data-i18n="stage.mid.b3">Push to <strong>Level 9</strong> after stabilizing</li>
+            <li data-i18n="stage.mid.b4">Flex <em>Swain</em> or <em>Shyvana</em> if available</li>
+            <li data-i18n="stage.mid.b5">Never roll below 10g — interest matters</li>
           </ul>
           <div class="kaisa-unlock">
-            <div class="kaisa-unlock-title">🔓 KAI'SA UNLOCK</div>
+            <div class="kaisa-unlock-title" data-i18n="unlock.kaisa.title">🔓 KAI'SA UNLOCK</div>
             <ul>
-              <li>Reach <strong>Level 7</strong></li>
-              <li>Have a <strong>Longshot</strong> unit on board with <em>3 items equipped</em></li>
-              <li>Both conditions met → Kai'Sa unlocks automatically</li>
+              <li data-i18n="unlock.kaisa.b1">Reach <strong>Level 7</strong></li>
+              <li data-i18n="unlock.kaisa.b2">Have a <strong>Longshot</strong> unit on board with <em>3 items equipped</em></li>
+              <li data-i18n="unlock.kaisa.b3">Both conditions met → Kai'Sa unlocks automatically</li>
             </ul>
           </div>
           <div class="voli-unlock">
-            <div class="voli-unlock-title">⚡ VOLIBEAR UNLOCK</div>
+            <div class="voli-unlock-title" data-i18n="unlock.voli.title">⚡ VOLIBEAR UNLOCK</div>
             <ul>
-              <li>Reach <strong>Level 8</strong></li>
-              <li>Have a unit that starts combat with at least <strong>3800 HP</strong></li>
-              <li>Tip: Rift Herald or Cho'Gath with tank items easily hit this threshold</li>
+              <li data-i18n="unlock.voli.b1">Reach <strong>Level 8</strong></li>
+              <li data-i18n="unlock.voli.b2">Have a unit that starts combat with at least <strong>3800 HP</strong></li>
+              <li data-i18n="unlock.voli.b3">Tip: Rift Herald or Cho'Gath with tank items easily hit this threshold</li>
             </ul>
           </div>
         </div>
@@ -1848,24 +1856,24 @@
 
       <div class="stage-card reveal reveal-delay-3">
         <div class="stage-header">
-          <div class="stage-badge badge-late">STAGE 5+</div>
-          <div class="stage-title">Late Game</div>
+          <div class="stage-badge badge-late" data-i18n="stage.late.badge">STAGE 5+</div>
+          <div class="stage-title" data-i18n="stage.late.title">Late Game</div>
           <div class="stage-icon">👑</div>
         </div>
         <div class="stage-body">
           <ul>
-            <li>Full <strong>9 Void + Bruiser</strong> board active</li>
-            <li>Wukong → <em>Volibear</em> slot for Bruiser trait</li>
-            <li>Push <strong>Level 10</strong> when carry is itemized</li>
-            <li>Slot in <em>Baron Nashor</em> as capstone unit</li>
+            <li data-i18n="stage.late.b1">Full <strong>9 Void + Bruiser</strong> board active</li>
+            <li data-i18n="stage.late.b2">Wukong → <em>Volibear</em> slot for Bruiser trait</li>
+            <li data-i18n="stage.late.b3">Push <strong>Level 10</strong> when carry is itemized</li>
+            <li data-i18n="stage.late.b4">Slot in <em>Baron Nashor</em> as capstone unit</li>
           </ul>
           <div class="baron-unlock">
-            <div class="baron-unlock-title">👑 BARON NASHOR UNLOCK</div>
+            <div class="baron-unlock-title" data-i18n="unlock.baron.title">👑 BARON NASHOR UNLOCK</div>
             <ul>
-              <li>Reach <strong>Level 10</strong></li>
-              <li>Field <strong>7 unique Void units</strong> simultaneously</li>
-              <li>Baron counts as <strong>2 team slots</strong> — plan your roster accordingly</li>
-              <li>Tip: Transfer your best items to Baron immediately after unlocking</li>
+              <li data-i18n="unlock.baron.b1">Reach <strong>Level 10</strong></li>
+              <li data-i18n="unlock.baron.b2">Field <strong>7 unique Void units</strong> simultaneously</li>
+              <li data-i18n="unlock.baron.b3">Baron counts as <strong>2 team slots</strong> — plan your roster accordingly</li>
+              <li data-i18n="unlock.baron.b4">Tip: Transfer your best items to Baron immediately after unlocking</li>
             </ul>
           </div>
         </div>
@@ -1881,36 +1889,36 @@
   <div class="section">
     <div class="section-header reveal">
       <div class="section-tag">// 04 // POSITIONING</div>
-      <h2 class="section-title">BOARD POSITIONING</h2>
+      <h2 class="section-title" data-i18n="section.positioning">BOARD POSITIONING</h2>
     </div>
 
     <div class="board-tabs reveal">
       <button class="board-tab active" onclick="switchBoard('lvl4', this)">
         LVL 4
-        <span class="tab-sub">Early Opener</span>
+        <span class="tab-sub" data-i18n="board.lvl4.sub">Early Opener</span>
       </button>
       <button class="board-tab" onclick="switchBoard('lvl6', this)">
         LVL 6
-        <span class="tab-sub">Early</span>
+        <span class="tab-sub" data-i18n="board.lvl6.sub">Early</span>
       </button>
       <button class="board-tab" onclick="switchBoard('lvl8', this)">
         LVL 8
-        <span class="tab-sub">Stable</span>
+        <span class="tab-sub" data-i18n="board.lvl8.sub">Stable</span>
       </button>
       <button class="board-tab" onclick="switchBoard('lvl9', this)">
         LVL 9
-        <span class="tab-sub">Roll for Kai'Sa ⭐⭐ — Baron comes on Lvl 10</span>
+        <span class="tab-sub" data-i18n="board.lvl9.sub">Roll for Kai'Sa ⭐⭐ — Baron comes on Lvl 10</span>
       </button>
       <button class="board-tab" onclick="switchBoard('lvl10', this)">
         LVL 10
-        <span class="tab-sub">Full Cap</span>
+        <span class="tab-sub" data-i18n="board.lvl10.sub">Full Cap</span>
       </button>
     </div>
 
     <!-- LVL 4 BOARD -->
     <div class="board-state active" id="board-lvl4">
       <div class="board-note-wrap">
-        <span class="board-note">2 Void active — start the Rift Herald counter</span>
+        <span class="board-note" data-i18n="board.lvl4.note">2 Void active — start the Rift Herald counter</span>
       </div>
       <div class="board-wrapper reveal">
         <div class="hex-board-container">
@@ -1963,7 +1971,7 @@
     <!-- LVL 6 BOARD -->
     <div class="board-state" id="board-lvl6">
       <div class="board-note-wrap">
-        <span class="board-note">4 Void active — Rift Herald counter running</span>
+        <span class="board-note" data-i18n="board.lvl6.note">4 Void active — Rift Herald counter running</span>
       </div>
       <div class="board-wrapper reveal">
         <div class="hex-board-container">
@@ -2016,7 +2024,7 @@
     <!-- LVL 8 BOARD -->
     <div class="board-state" id="board-lvl8">
       <div class="board-note-wrap">
-        <span class="board-note">STABLE 8-UNIT CORE — ROLL FOR KAI'SA 2★ + RIFT HERALD 2★</span>
+        <span class="board-note" data-i18n="board.lvl8.note">STABLE 8-UNIT CORE — ROLL FOR KAI'SA 2★ + RIFT HERALD 2★</span>
       </div>
       <div class="board-wrapper reveal">
         <div class="hex-board-container">
@@ -2069,7 +2077,7 @@
     <!-- LVL 9 BOARD -->
     <div class="board-state" id="board-lvl9">
       <div class="board-note-wrap">
-        <span class="board-note">POWER SPIKE — ROLL FOR KAI'SA ⭐⭐ — BARON COMES ON LVL 10</span>
+        <span class="board-note" data-i18n="board.lvl9.note">POWER SPIKE — ROLL FOR KAI'SA ⭐⭐ — BARON COMES ON LVL 10</span>
       </div>
       <div class="board-wrapper reveal">
         <div class="hex-board-container">
@@ -2122,7 +2130,7 @@
     <!-- LVL 10 BOARD -->
     <div class="board-state" id="board-lvl10">
       <div class="board-note-wrap">
-        <span class="board-note">Baron at center front — charges into the enemy backline!</span>
+        <span class="board-note" data-i18n="board.lvl10.note">Baron at center front — charges into the enemy backline!</span>
       </div>
       <div class="board-wrapper reveal">
         <div class="hex-board-container">
@@ -2193,7 +2201,7 @@
   <div class="section">
     <div class="section-header reveal">
       <div class="section-tag">// 05 // ITEMIZATION</div>
-      <h2 class="section-title">ITEMS &amp; MUTATIONS</h2>
+      <h2 class="section-title" data-i18n="section.items">ITEMS &amp; MUTATIONS</h2>
     </div>
 
     <div class="items-grid" style="grid-template-columns:1fr 1fr">
@@ -2205,7 +2213,7 @@
           </div>
           <div>
             <div class="item-card-title">KAI'SA — ITEMS</div>
-            <div class="item-card-sub">HYBRID CARRY BUILD</div>
+            <div class="item-card-sub" data-i18n="items.kaisa.sub">HYBRID CARRY BUILD</div>
           </div>
         </div>
         <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
@@ -2289,7 +2297,7 @@
           </div>
           <div>
             <div class="item-card-title">BARON NASHOR — ITEMS</div>
-            <div class="item-card-sub">AD CARRY / BRUISER</div>
+            <div class="item-card-sub" data-i18n="items.baron.sub">AD CARRY / BRUISER</div>
           </div>
         </div>
         <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
@@ -2351,7 +2359,7 @@
           </div>
           <div>
             <div class="item-card-title">RIFT HERALD — ITEMS</div>
-            <div class="item-card-sub">TANK / BRUISER BUILD</div>
+            <div class="item-card-sub" data-i18n="items.herald.sub">TANK / BRUISER BUILD</div>
           </div>
         </div>
         <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
@@ -2413,7 +2421,7 @@
           </div>
           <div>
             <div class="item-card-title">BEL'VETH — ITEMS</div>
-            <div class="item-card-sub">SLAYER CARRY</div>
+            <div class="item-card-sub" data-i18n="items.belveth.sub">SLAYER CARRY</div>
           </div>
         </div>
         <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
@@ -2468,8 +2476,8 @@
   <div class="baron-glow"></div>
   <div class="reveal">
     <div class="win-eyebrow">// ENDGAME PROTOCOL //</div>
-    <h2 class="win-title">PUSH TO<br>LEVEL 10</h2>
-    <p class="win-sub">Baron Nashor unlocked — Transfer items — Equip best Void mutation</p>
+    <h2 class="win-title" data-i18n="win.title">PUSH TO<br>LEVEL 10</h2>
+    <p class="win-sub" data-i18n="win.sub">Baron Nashor unlocked — Transfer items — Equip best Void mutation</p>
     <div class="win-steps">
       <div class="win-step">
         <span class="win-step-num">01</span>
@@ -2671,6 +2679,180 @@
     document.getElementById('board-' + level).classList.add('active');
     btn.classList.add('active');
   }
+</script>
+
+<script>
+  /* ══════════════════════════════════════════
+     I18N — LANGUAGE TOGGLE
+  ══════════════════════════════════════════ */
+  const translations = {
+    en: {
+      "hero.scroll": "SCROLL TO ACCESS",
+      "section.champions": "CHAMPIONS",
+      "section.leveling": "LEVELING GUIDE",
+      "section.positioning": "POSITIONING",
+      "section.stages": "STAGE BREAKDOWN",
+      "section.items": "ITEMS & MUTATIONS",
+      "trait.void": "VOID",
+      "trait.bruiser": "BRUISER",
+      "trait.longshot": "LONGSHOT",
+      "stage.early.badge": "STAGE 2-3",
+      "stage.early.title": "Early Game",
+      "stage.mid.badge": "STAGE 4",
+      "stage.mid.title": "Mid Game",
+      "stage.late.badge": "STAGE 5+",
+      "stage.late.title": "Late Game",
+      "stage.early.b1": "<strong>Slam items aggressively</strong> \u2014 don't save components",
+      "stage.early.b2": "<em>Play for winstreak</em> to build gold interest buffer",
+      "stage.early.b3": "Run Kog'Maw + Malzahar + Rek'Sai as core",
+      "stage.early.b4": "Keep strongest available board \u2014 don't force economy at cost of HP",
+      "unlock.rift.title": "\uD83C\uDF00 RIFT HERALD UNLOCK",
+      "unlock.rift.b1": "Have <strong>Void active</strong> for <strong>8 player combats</strong>",
+      "unlock.rift.b2": "No level requirement \u2014 auto-unlocks after 8 Void combats",
+      "unlock.rift.b3": "<strong>2 Void units</strong> already activate the trait \u2014 get them on board ASAP to start the 8-combat counter",
+      "stage.mid.b1": "Roll on <strong>Level 8</strong> for key 2-stars",
+      "stage.mid.b2": "Priority: <em>Kai'Sa 2\u2605</em> first, then <em>Rift Herald 2\u2605</em>",
+      "stage.mid.b3": "Push to <strong>Level 9</strong> after stabilizing",
+      "stage.mid.b4": "Flex <em>Swain</em> or <em>Shyvana</em> if available",
+      "stage.mid.b5": "Never roll below 10g \u2014 interest matters",
+      "unlock.kaisa.title": "\uD83D\uDD13 KAI'SA UNLOCK",
+      "unlock.kaisa.b1": "Reach <strong>Level 7</strong>",
+      "unlock.kaisa.b2": "Have a <strong>Longshot</strong> unit on board with <em>3 items equipped</em>",
+      "unlock.kaisa.b3": "Both conditions met \u2192 Kai'Sa unlocks automatically",
+      "unlock.voli.title": "\u26A1 VOLIBEAR UNLOCK",
+      "unlock.voli.b1": "Reach <strong>Level 8</strong>",
+      "unlock.voli.b2": "Have a unit that starts combat with at least <strong>3800 HP</strong>",
+      "unlock.voli.b3": "Tip: Rift Herald or Cho'Gath with tank items easily hit this threshold",
+      "stage.late.b1": "Full <strong>9 Void + Bruiser</strong> board active",
+      "stage.late.b2": "Wukong \u2192 <em>Volibear</em> slot for Bruiser trait",
+      "stage.late.b3": "Push <strong>Level 10</strong> when carry is itemized",
+      "stage.late.b4": "Slot in <em>Baron Nashor</em> as capstone unit",
+      "unlock.baron.title": "\uD83D\uDC51 BARON NASHOR UNLOCK",
+      "unlock.baron.b1": "Reach <strong>Level 10</strong>",
+      "unlock.baron.b2": "Field <strong>7 unique Void units</strong> simultaneously",
+      "unlock.baron.b3": "Baron counts as <strong>2 team slots</strong> \u2014 plan your roster accordingly",
+      "unlock.baron.b4": "Tip: Transfer your best items to Baron immediately after unlocking",
+      "board.lvl4.sub": "Early Opener",
+      "board.lvl6.sub": "Early",
+      "board.lvl8.sub": "Stable",
+      "board.lvl9.sub": "Roll for Kai'Sa \u2B50\u2B50 \u2014 Baron comes on Lvl 10",
+      "board.lvl10.sub": "Full Cap",
+      "board.lvl4.note": "2 Void active \u2014 start the Rift Herald counter",
+      "board.lvl6.note": "4 Void active \u2014 Rift Herald counter running",
+      "board.lvl8.note": "6 Void active \u2014 Rift Herald unlocked",
+      "board.lvl9.note": "ROLL FOR KAI'SA \u2B50\u2B50 \u2014 BARON COMES ON LVL 10",
+      "board.lvl10.note": "BARON NASHOR JOINS FRONT LINE",
+      "items.kaisa.sub": "HYBRID CARRY BUILD",
+      "items.baron.sub": "AD CARRY / BRUISER",
+      "items.herald.sub": "TANK / BRUISER BUILD",
+      "items.belveth.sub": "SLAYER BUILD",
+      "win.title": "PUSH TO LEVEL 10",
+      "win.sub": "Baron Nashor \u2014 The Ultimate Carry",
+      "lvl.4.cond": "Level up if you have upgrades and a good item",
+      "lvl.5.cond": "Always, unless on 3\u00D7 loss streak",
+      "lvl.6.cond": "4+ winstreak OR stay above 40g",
+      "lvl.7.cond": "If you can stay above 30g",
+      "lvl.8.cond": "Roll for Kai'Sa \u2B50\u2B50 + Rift Herald \u2B50\u2B50",
+      "lvl.9.cond": "High HP: wait until 5-5 | Low HP: go ASAP",
+      "lvl.10.cond": "Carry itemized + upgraded \u2192 Baron online",
+    },
+    de: {
+      "hero.scroll": "SCROLLEN UM FORTZUFAHREN",
+      "section.champions": "CHAMPIONS",
+      "section.leveling": "LEVEL-GUIDE",
+      "section.positioning": "POSITIONIERUNG",
+      "section.stages": "STAGE-\u00DCBERSICHT",
+      "section.items": "ITEMS & MUTATIONEN",
+      "trait.void": "VOID",
+      "trait.bruiser": "BRUISER",
+      "trait.longshot": "WEITSCHUSS",
+      "stage.early.badge": "STAGE 2-3",
+      "stage.early.title": "Fr\u00FChes Spiel",
+      "stage.mid.badge": "STAGE 4",
+      "stage.mid.title": "Mittelspiel",
+      "stage.late.badge": "STAGE 5+",
+      "stage.late.title": "Sp\u00E4tes Spiel",
+      "stage.early.b1": "<strong>Items sofort einbauen</strong> \u2014 keine Komponenten horten",
+      "stage.early.b2": "<em>Auf Winstreak spielen</em> um Goldinteresse aufzubauen",
+      "stage.early.b3": "Kog'Maw + Malzahar + Rek'Sai als Kernkombo",
+      "stage.early.b4": "St\u00E4rkstes Board spielen \u2014 Economy nicht auf Kosten von HP forcen",
+      "unlock.rift.title": "\uD83C\uDF00 RIFT HERALD FREISCHALTEN",
+      "unlock.rift.b1": "<strong>Void aktiv</strong> f\u00FCr <strong>8 Spielk\u00E4mpfe</strong>",
+      "unlock.rift.b2": "Kein Level-Requirement \u2014 schaltet nach 8 Void-K\u00E4mpfen automatisch frei",
+      "unlock.rift.b3": "<strong>2 Void-Units</strong> aktivieren den Trait bereits \u2014 so fr\u00FCh wie m\u00F6glich auf das Board bringen",
+      "stage.mid.b1": "Rollen auf <strong>Level 8</strong> f\u00FCr wichtige 2-Sterne",
+      "stage.mid.b2": "Priorit\u00E4t: <em>Kai'Sa 2\u2605</em> zuerst, dann <em>Rift Herald 2\u2605</em>",
+      "stage.mid.b3": "Nach dem Stabilisieren auf <strong>Level 9</strong> pushen",
+      "stage.mid.b4": "<em>Swain</em> oder <em>Shyvana</em> als Flex wenn verf\u00FCgbar",
+      "stage.mid.b5": "Nie unter 10g rollen \u2014 Zinsen sind wichtig",
+      "unlock.kaisa.title": "\uD83D\uDD13 KAI'SA FREISCHALTEN",
+      "unlock.kaisa.b1": "<strong>Level 7</strong> erreichen",
+      "unlock.kaisa.b2": "Eine <strong>Weitschuss</strong>-Unit mit <em>3 Items ausr\u00FCstet</em> auf dem Board haben",
+      "unlock.kaisa.b3": "Beide Bedingungen erf\u00FCllt \u2192 Kai'Sa schaltet automatisch frei",
+      "unlock.voli.title": "\u26A1 VOLIBEAR FREISCHALTEN",
+      "unlock.voli.b1": "<strong>Level 8</strong> erreichen",
+      "unlock.voli.b2": "Eine Unit haben, die mit mindestens <strong>3800 HP</strong> in den Kampf startet",
+      "unlock.voli.b3": "Tipp: Rift Herald oder Cho'Gath mit Tank-Items erreichen das leicht",
+      "stage.late.b1": "Volles <strong>9 Void + Bruiser</strong> Board aktiv",
+      "stage.late.b2": "Wukong \u2192 <em>Volibear</em> Slot f\u00FCr Bruiser-Trait",
+      "stage.late.b3": "Auf <strong>Level 10</strong> pushen wenn Carry itemisiert ist",
+      "stage.late.b4": "<em>Baron Nashor</em> als Cap-Unit einsetzen",
+      "unlock.baron.title": "\uD83D\uDC51 BARON NASHOR FREISCHALTEN",
+      "unlock.baron.b1": "<strong>Level 10</strong> erreichen",
+      "unlock.baron.b2": "<strong>7 einzigartige Void-Units</strong> gleichzeitig aufstellen",
+      "unlock.baron.b3": "Baron z\u00E4hlt als <strong>2 Team-Slots</strong> \u2014 Roster entsprechend planen",
+      "unlock.baron.b4": "Tipp: Beste Items sofort nach dem Freischalten auf Baron transferieren",
+      "board.lvl4.sub": "Fr\u00FCher Opener",
+      "board.lvl6.sub": "Fr\u00FCh",
+      "board.lvl8.sub": "Stabilisieren",
+      "board.lvl9.sub": "F\u00FCr Kai'Sa 2\u2605 rollen \u2014 Baron kommt auf Lvl 10",
+      "board.lvl10.sub": "Volles Cap",
+      "board.lvl4.note": "2 Void aktiv \u2014 Rift Herald Z\u00E4hler starten",
+      "board.lvl6.note": "4 Void aktiv \u2014 Rift Herald Z\u00E4hler l\u00E4uft",
+      "board.lvl8.note": "6 Void aktiv \u2014 Rift Herald freigeschaltet",
+      "board.lvl9.note": "F\u00DCR KAI'SA 2\u2605 ROLLEN \u2014 BARON KOMMT AUF LVL 10",
+      "board.lvl10.note": "BARON NASHOR BETRITT DIE FRONTLINIE",
+      "items.kaisa.sub": "HYBRID-CARRY BUILD",
+      "items.baron.sub": "AD CARRY / BRUISER",
+      "items.herald.sub": "TANK / BRUISER BUILD",
+      "items.belveth.sub": "SLAYER BUILD",
+      "win.title": "AUF LEVEL 10 PUSHEN",
+      "win.sub": "Baron Nashor \u2014 Der ultimative Carry",
+      "lvl.4.cond": "Level up wenn du Upgrades und ein gutes Item hast",
+      "lvl.5.cond": "Immer, au\u00DFer bei 3\u00D7 Lossstreak",
+      "lvl.6.cond": "4+ Winstreak ODER \u00FCber 40g bleiben",
+      "lvl.7.cond": "Wenn du \u00FCber 30g bleiben kannst",
+      "lvl.8.cond": "F\u00FCr Kai'Sa 2\u2605 + Rift Herald 2\u2605 rollen",
+      "lvl.9.cond": "Viel HP: bis 5-5 warten | Wenig HP: so fr\u00FCh wie m\u00F6glich",
+      "lvl.10.cond": "Carry itemisiert + upgraded \u2192 Baron online",
+    }
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'en';
+
+  function setElContent(el, html) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+    el.insertAdjacentHTML('afterbegin', html);
+  }
+
+  function applyLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key] !== undefined) {
+        setElContent(el, translations[lang][key]);
+      }
+    });
+    var btn = document.getElementById('lang-toggle');
+    if (btn) setElContent(btn, lang === 'en' ? '\uD83C\uDDE9\uD83C\uDDEA DE' : '\uD83C\uDDEC\uD83C\uDDE7 EN');
+  }
+
+  function toggleLang() {
+    applyLang(currentLang === 'en' ? 'de' : 'en');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() { applyLang(currentLang); });
 </script>
 </body>
 </html>
