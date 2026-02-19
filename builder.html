@@ -299,11 +299,11 @@
 
   .champ-card:active { cursor: grabbing; }
 
-  .champ-card[data-cost="1"] { border-color: rgba(156,163,175,0.5); }
-  .champ-card[data-cost="2"] { border-color: rgba(16,185,129,0.5); }
-  .champ-card[data-cost="3"] { border-color: rgba(59,130,246,0.5); }
-  .champ-card[data-cost="4"] { border-color: rgba(168,85,247,0.5); }
-  .champ-card[data-cost="5"] { border-color: rgba(245,158,11,0.5); }
+  .champ-card[data-cost="1"] { background: rgba(156,163,175,0.25); border-color: rgba(156,163,175,0.8); }
+  .champ-card[data-cost="2"] { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.9); }
+  .champ-card[data-cost="3"] { background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.9); }
+  .champ-card[data-cost="4"] { background: rgba(168,85,247,0.2); border-color: rgba(168,85,247,0.9); }
+  .champ-card[data-cost="5"] { background: rgba(245,158,11,0.2); border-color: rgba(245,158,11,0.9); }
 
   .champ-card:hover {
     transform: scale(1.1);
@@ -770,16 +770,37 @@
     opacity: 0.4;
   }
 
+  .champ-name-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 0.45rem;
+    text-align: center;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 1px 2px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 960px) {
+    body { overflow-y: auto; }
+
     .builder-wrap {
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr auto;
+      min-height: auto;
+      overflow: visible;
     }
 
     .panel, .board-panel {
       border: none !important;
       border-bottom: 1px solid var(--border-subtle) !important;
+      overflow: visible;
     }
 
     .panel:last-child {
@@ -791,9 +812,9 @@
     }
 
     .panel-body {
-      max-height: 45vh;
+      max-height: none;
       min-height: 180px;
-      overflow-y: auto;
+      overflow-y: visible;
       -webkit-overflow-scrolling: touch;
     }
 
@@ -1079,12 +1100,24 @@ function renderRoster() {
     img.src = ch.img;
     img.alt = ch.name;
     img.loading = 'lazy';
+    img.onerror = function() {
+      this.style.display = 'none';
+      var fallback = document.createElement('div');
+      fallback.style.cssText = 'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:0.6rem;font-weight:bold;color:#fff;letter-spacing:0;';
+      fallback.textContent = ch.name.split(' ').map(function(w){return w[0];}).join('').slice(0,3);
+      card.insertBefore(fallback, card.firstChild);
+    };
     card.appendChild(img);
 
     var tip = document.createElement('span');
     tip.className = 'champ-name-tip';
     tip.textContent = ch.name;
     card.appendChild(tip);
+
+    var nameLabel = document.createElement('div');
+    nameLabel.className = 'champ-name-label';
+    nameLabel.textContent = ch.name;
+    card.appendChild(nameLabel);
 
     card.addEventListener('dragstart', function(e) {
       e.dataTransfer.setData('text/plain', ch.id);
@@ -1116,6 +1149,9 @@ function renderRoster() {
   });
 
   console.log('[Builder] renderRoster: ' + filtered.length + ' champions rendered');
+
+  var titleEl = document.querySelector('#roster-panel .panel-title');
+  if (titleEl) titleEl.textContent = 'CHAMPION ROSTER (' + filtered.length + ')';
 }
 
 /* ── HEX BOARD ── */
