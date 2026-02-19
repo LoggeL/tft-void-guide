@@ -235,6 +235,71 @@
     50%      { box-shadow: 0 0 40px rgba(139,92,246,0.2), inset 0 0 40px rgba(139,92,246,0.06); }
   }
 
+  /* ── BUILDER CARD ── */
+  .comp-card.builder {
+    border-color: rgba(6,182,212,0.5);
+    box-shadow: 0 0 30px rgba(6,182,212,0.12), inset 0 0 30px rgba(6,182,212,0.04);
+    animation: cardPulseCyan 3s ease-in-out infinite;
+  }
+
+  .comp-card.builder:hover {
+    transform: translateY(-8px);
+    border-color: rgba(6,182,212,0.7);
+    box-shadow: 0 8px 40px rgba(6,182,212,0.2), 0 0 60px rgba(6,182,212,0.1);
+  }
+
+  @keyframes cardPulseCyan {
+    0%, 100% { box-shadow: 0 0 30px rgba(6,182,212,0.12), inset 0 0 30px rgba(6,182,212,0.04); }
+    50%      { box-shadow: 0 0 40px rgba(6,182,212,0.2), inset 0 0 40px rgba(6,182,212,0.06); }
+  }
+
+  .builder .card-title {
+    background: linear-gradient(135deg, #67e8f9, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+
+  .builder .champ-portrait {
+    border-color: rgba(6,182,212,0.4);
+  }
+
+  .builder:hover .champ-portrait {
+    border-color: rgba(6,182,212,0.7);
+  }
+
+  .btn-builder {
+    color: #fff;
+    border-color: var(--cyan-core);
+    background: linear-gradient(135deg, rgba(6,182,212,0.3), rgba(139,92,246,0.15));
+    box-shadow: 0 0 20px rgba(6,182,212,0.15);
+  }
+
+  .btn-builder:hover {
+    background: linear-gradient(135deg, rgba(6,182,212,0.5), rgba(139,92,246,0.25));
+    box-shadow: 0 0 30px rgba(6,182,212,0.25);
+    transform: translateX(2px);
+  }
+
+  .hex-icon {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 14px);
+    gap: 2px;
+    margin-bottom: 0.8rem;
+  }
+
+  .hex-icon-cell {
+    width: 14px;
+    height: 14px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: rgba(6,182,212,0.3);
+  }
+
+  .hex-icon-cell.lit {
+    background: rgba(6,182,212,0.6);
+  }
+
   /* ── LOCKED CARD ── */
   .comp-card.locked {
     border-color: rgba(255,255,255,0.06);
@@ -315,6 +380,13 @@
     border-color: rgba(245,158,11,0.4);
     background: rgba(245,158,11,0.1);
     text-shadow: 0 0 8px rgba(245,158,11,0.3);
+  }
+
+  .tier-tool {
+    color: var(--cyan-glow);
+    border-color: rgba(6,182,212,0.4);
+    background: rgba(6,182,212,0.1);
+    text-shadow: 0 0 8px rgba(6,182,212,0.3);
   }
 
   .tier-locked {
@@ -570,25 +642,31 @@
       </div>
     </div>
 
-    <!-- CARD 2: COMING SOON -->
-    <div class="comp-card locked" data-delay="1">
+    <!-- CARD 2: TEAM BUILDER (ACTIVE) -->
+    <div class="comp-card builder" data-delay="1">
       <div class="card-inner">
         <div class="card-header">
-          <div class="card-title">???</div>
-          <span class="tier-badge tier-locked">???</span>
+          <div class="card-title">BUILDER</div>
+          <span class="tier-badge tier-tool">TOOL</span>
         </div>
-        <div class="champ-row">
-          <div class="champ-placeholder">?</div>
-          <div class="champ-placeholder">?</div>
-          <div class="champ-placeholder">?</div>
-          <div class="champ-placeholder">?</div>
-          <div class="champ-placeholder">?</div>
+        <div class="hex-icon">
+          <div class="hex-icon-cell"></div>
+          <div class="hex-icon-cell lit"></div>
+          <div class="hex-icon-cell"></div>
+          <div class="hex-icon-cell lit"></div>
+          <div class="hex-icon-cell"></div>
+          <div class="hex-icon-cell lit"></div>
+          <div class="hex-icon-cell"></div>
+          <div class="hex-icon-cell lit"></div>
+          <div class="hex-icon-cell"></div>
         </div>
         <div class="tag-row">
-          <span class="tag tag-dim">COMING SOON</span>
+          <span class="tag tag-cyan">DRAG &amp; DROP</span>
+          <span class="tag tag-cyan">ALL CHAMPS</span>
+          <span class="tag tag-gold">TRAIT TRACKER</span>
         </div>
-        <p class="card-desc">New comp guide in development. Stay tuned for the next strategy breakdown.</p>
-        <span class="card-btn btn-locked">LOCKED &#x1f512;</span>
+        <p class="card-desc">Drag &amp; drop any champions. See traits light up. Share your builds via link.</p>
+        <a href="./builder.html" class="card-btn btn-builder">OPEN BUILDER &rarr;</a>
       </div>
     </div>
 
@@ -642,6 +720,8 @@
   <footer class="hub-footer">
     <p class="footer-text">// MORE COMPS COMING SOON &mdash; STAY TUNED //</p>
     <a href="./void/" class="footer-link">VOID COMP GUIDE &rarr;</a>
+    &nbsp;&nbsp;
+    <a href="./builder.html" class="footer-link">TEAM BUILDER &rarr;</a>
   </footer>
 
 </div>
