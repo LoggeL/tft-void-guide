@@ -786,7 +786,20 @@
       border-bottom: none !important;
     }
 
-    .panel-body { max-height: 250px; }
+    #roster-panel {
+      min-height: 260px;
+    }
+
+    .panel-body {
+      max-height: 45vh;
+      min-height: 180px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #champ-grid {
+      min-height: 150px;
+    }
 
     .board-panel {
       min-height: 380px;
@@ -795,6 +808,78 @@
     .board-row.offset { margin-left: 38px; }
 
     .hex-cell { width: 62px; height: 62px; }
+  }
+
+  /* ── MOBILE TAP-TO-SELECT ── */
+  .champ-card.selected {
+    border-color: #06b6d4;
+    box-shadow: 0 0 12px #06b6d4;
+    transform: scale(1.1);
+    z-index: 2;
+  }
+
+  .mobile-selection-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    background: rgba(4,6,15,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--cyan-core);
+    box-shadow: 0 -4px 20px rgba(6,182,212,0.2);
+    animation: slideUp 0.2s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .mobile-selection-bar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    border: 2px solid var(--cyan-core);
+    object-fit: cover;
+  }
+
+  .mobile-selection-bar .sel-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .mobile-selection-bar .sel-name {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cyan-glow);
+  }
+
+  .mobile-selection-bar .sel-hint {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .mobile-selection-bar .sel-cancel {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid rgba(239,68,68,0.4);
+    background: transparent;
+    color: var(--danger);
+    cursor: pointer;
   }
 
   @media (max-width: 520px) {
@@ -831,7 +916,7 @@
 
   <div class="board-panel" id="board-panel">
     <div class="board-container" id="board-container"></div>
-    <div class="board-label">DRAG CHAMPIONS TO THE BOARD</div>
+    <div class="board-label" id="board-label">DRAG CHAMPIONS TO THE BOARD</div>
   </div>
 
   <div class="panel" id="analysis-panel">
@@ -894,6 +979,12 @@ function init() {
   document.getElementById('btn-clear').addEventListener('click', clearBoard);
 
   window.addEventListener('hashchange', loadFromHash);
+
+  // Update label for touch devices
+  if (isTouchDevice) {
+    var label = document.getElementById('board-label');
+    if (label) label.textContent = 'TAP A CHAMPION, THEN TAP A HEX';
+  }
 }
 
 /* ── COST FILTERS ── */
@@ -1002,10 +1093,29 @@ function renderRoster() {
     });
     card.addEventListener('dragend', function() { card.classList.remove('dragging'); });
 
+    // Mobile tap-to-select
+    if (isTouchDevice && !isOnBoard) {
+      (function(champId, cardEl) {
+        cardEl.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (selectedChampId === champId) {
+            deselectChampion();
+          } else {
+            deselectChampion();
+            selectedChampId = champId;
+            cardEl.classList.add('selected');
+            showSelectionBar(champId);
+          }
+        });
+      })(ch.id, card);
+    }
+
     setupTouchDrag(card, ch.id, 'roster');
 
     grid.appendChild(card);
   });
+
+  console.log('[Builder] renderRoster: ' + filtered.length + ' champions rendered');
 }
 
 /* ── HEX BOARD ── */
@@ -1057,6 +1167,13 @@ function createHexCell(r, c) {
   });
 
   hex.addEventListener('click', function() {
+    // Mobile tap-to-place: if a champion is selected and this hex is empty, place it
+    if (isTouchDevice && selectedChampId && !board[r][c]) {
+      board[r][c] = selectedChampId;
+      deselectChampion();
+      refreshBoard();
+      return;
+    }
     if (board[r][c]) {
       board[r][c] = null;
       refreshBoard();
@@ -1133,6 +1250,11 @@ function refreshBoard() {
         inner.appendChild(plus);
       }
     }
+  }
+  // Clear mobile selection when board changes
+  if (selectedChampId) {
+    var stillValid = !getOnBoardIds().has(selectedChampId);
+    if (!stillValid) deselectChampion();
   }
   renderRoster();
   renderAnalysis();
@@ -1338,6 +1460,61 @@ function showToast(msg) {
   el.textContent = msg;
   el.classList.add('show');
   setTimeout(function() { el.classList.remove('show'); }, 2000);
+}
+
+/* ── MOBILE TAP-TO-SELECT ── */
+var selectedChampId = null;
+var isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+var selectionBar = null;
+
+function showSelectionBar(champId) {
+  hideSelectionBar();
+  var ch = champMap[champId];
+  if (!ch) return;
+  selectionBar = document.createElement('div');
+  selectionBar.className = 'mobile-selection-bar';
+
+  var img = document.createElement('img');
+  img.src = ch.img;
+  img.alt = ch.name;
+  selectionBar.appendChild(img);
+
+  var info = document.createElement('div');
+  info.className = 'sel-info';
+  var nameEl = document.createElement('div');
+  nameEl.className = 'sel-name';
+  nameEl.textContent = ch.name;
+  info.appendChild(nameEl);
+  var hint = document.createElement('div');
+  hint.className = 'sel-hint';
+  hint.textContent = 'TAP A HEX TO PLACE';
+  info.appendChild(hint);
+  selectionBar.appendChild(info);
+
+  var cancel = document.createElement('button');
+  cancel.className = 'sel-cancel';
+  cancel.textContent = 'CANCEL';
+  cancel.addEventListener('click', function(e) {
+    e.stopPropagation();
+    deselectChampion();
+  });
+  selectionBar.appendChild(cancel);
+
+  document.body.appendChild(selectionBar);
+}
+
+function hideSelectionBar() {
+  if (selectionBar) {
+    selectionBar.remove();
+    selectionBar = null;
+  }
+}
+
+function deselectChampion() {
+  selectedChampId = null;
+  hideSelectionBar();
+  var prev = document.querySelector('.champ-card.selected');
+  if (prev) prev.classList.remove('selected');
 }
 
 /* ── TOUCH DRAG ── */
