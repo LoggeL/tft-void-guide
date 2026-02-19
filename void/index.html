@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOID COMP // SET 16 CLASSIFIED GUIDE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void-deep: #04060f;
+    --void-dark: #080b12;
+    --void-mid: #0d1020;
+    --void-surface: #111827;
+    --void-card: rgba(13,16,32,0.85);
+    --purple-core: #7c3aed;
+    --purple-bright: #8b5cf6;
+    --purple-glow: #a78bfa;
+    --purple-soft: rgba(139,92,246,0.15);
+    --cyan-core: #0891b2;
+    --cyan-bright: #06b6d4;
+    --cyan-glow: #67e8f9;
+    --cyan-soft: rgba(6,182,212,0.12);
+    --danger: #ef4444;
+    --danger-soft: rgba(239,68,68,0.2);
+    --warning: #f59e0b;
+    --success: #10b981;
+    --gold: #f59e0b;
+    --text-primary: #e2e8f0;
+    --text-secondary: #d1d5db;
+    --text-dim: #9ca3af;
+    --border-subtle: rgba(139,92,246,0.2);
+    --border-glow: rgba(139,92,246,0.5);
+    --font-display: 'Orbitron', monospace;
+    --font-heading: 'Rajdhani', sans-serif;
+    --font-body: 'Exo 2', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 19px;
+  }
+
+  body {
+    background: var(--void-deep);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── SCAN LINES ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.4;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--void-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--purple-core); border-radius: 2px; }
+
+  /* ══════════════════════════════════════════
+     HERO SECTION
+  ══════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(91,33,182,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 30% at 20% 80%, rgba(6,182,212,0.08) 0%, transparent 60%),
+                var(--void-deep);
+  }
+
+  #particles-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2.5rem;
+  }
+
+  .classified-stamp {
+    display: inline-block;
+    border: 3px solid var(--danger);
+    color: var(--danger);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.4em;
+    padding: 0.4rem 1.5rem;
+    transform: rotate(-4deg);
+    opacity: 0;
+    margin-bottom: 2.5rem;
+    text-shadow: 0 0 10px rgba(239,68,68,0.5);
+    box-shadow: 0 0 12px rgba(239,68,68,0.3), inset 0 0 12px rgba(239,68,68,0.05);
+    animation: stampIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
+  }
+
+  @keyframes stampIn {
+    from { opacity: 0; transform: rotate(-4deg) scale(1.8); }
+    to   { opacity: 1; transform: rotate(-4deg) scale(1); }
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--cyan-bright);
+    letter-spacing: 0.3em;
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    animation: fadeSlideUp 0.6s ease 0.8s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 12vw, 10rem);
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    line-height: 0.9;
+    margin-bottom: 0.5rem;
+    position: relative;
+    opacity: 0;
+    animation: fadeSlideUp 0.6s ease 1s forwards;
+  }
+
+  .hero-title-void {
+    display: block;
+    background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 40%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+  }
+
+  .hero-title-void::before,
+  .hero-title-void::after {
+    content: 'VOID';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 40%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title-void::before {
+    animation: glitch1 4s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  }
+
+  .hero-title-void::after {
+    animation: glitch2 4s infinite;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  }
+
+  @keyframes glitch1 {
+    0%,94%,100%   { transform: translate(0,0); opacity: 0; }
+    95%           { transform: translate(-4px, 2px); opacity: 1; filter: hue-rotate(60deg); }
+    97%           { transform: translate(4px, -2px); opacity: 1; filter: hue-rotate(-30deg); }
+  }
+
+  @keyframes glitch2 {
+    0%,94%,100%   { transform: translate(0,0); opacity: 0; }
+    95%           { transform: translate(4px, -2px); opacity: 1; filter: hue-rotate(-60deg); }
+    97%           { transform: translate(-3px, 3px); opacity: 1; filter: hue-rotate(40deg); }
+  }
+
+  .hero-title-comp {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.45em;
+    letter-spacing: 0.4em;
+    margin-top: 0.3em;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    margin: 2rem 0 3.5rem;
+    opacity: 0;
+    animation: fadeSlideUp 0.6s ease 1.2s forwards;
+  }
+
+  .hero-subtitle span {
+    color: var(--purple-glow);
+  }
+
+  .hero-divider {
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--purple-bright), var(--cyan-bright), transparent);
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.3s forwards;
+  }
+
+  .scroll-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.8s forwards;
+    cursor: pointer;
+  }
+
+  .scroll-cta span {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+  }
+
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid var(--purple-bright);
+    border-bottom: 2px solid var(--purple-bright);
+    transform: rotate(45deg);
+    animation: bounceDown 1.5s ease-in-out infinite;
+  }
+
+  @keyframes bounceDown {
+    0%,100% { transform: rotate(45deg) translateY(0); opacity: 0.5; }
+    50%     { transform: rotate(45deg) translateY(5px); opacity: 1; }
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── Corner decorations ── */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px;
+    width: 60px; height: 60px;
+    border-top: 2px solid rgba(139,92,246,0.5);
+    border-left: 2px solid rgba(139,92,246,0.5);
+    z-index: 5;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 20px; right: 20px;
+    width: 60px; height: 60px;
+    border-bottom: 2px solid rgba(6,182,212,0.5);
+    border-right: 2px solid rgba(6,182,212,0.5);
+    z-index: 5;
+  }
+
+  /* ══════════════════════════════════════════
+     SECTION WRAPPERS
+  ══════════════════════════════════════════ */
+  .section {
+    padding: 8rem 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.35em;
+    color: var(--cyan-bright);
+    border: 1px solid rgba(6,182,212,0.3);
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.25rem;
+    background: rgba(6,182,212,0.05);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.75rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: linear-gradient(135deg, #e2e8f0 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ══════════════════════════════════════════
+     SCROLL REVEAL
+  ══════════════════════════════════════════ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ══════════════════════════════════════════
+     TRAITS BAR
+  ══════════════════════════════════════════ */
+  .traits-bar {
+    background: linear-gradient(180deg, rgba(91,33,182,0.15) 0%, transparent 100%);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .trait-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.3);
+    border-radius: 2px;
+    padding: 0.55rem 1.3rem;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--purple-glow);
+    transition: all 0.3s ease;
+  }
+
+  .trait-pill:hover {
+    background: rgba(139,92,246,0.2);
+    border-color: var(--purple-bright);
+    box-shadow: 0 0 20px rgba(139,92,246,0.3);
+  }
+
+  .trait-pill .trait-count {
+    background: var(--purple-core);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+  }
+
+  .trait-pill.trait-cyan {
+    color: var(--cyan-bright);
+    background: rgba(6,182,212,0.08);
+    border-color: rgba(6,182,212,0.3);
+  }
+  .trait-pill.trait-cyan .trait-count { background: var(--cyan-core); }
+
+  /* ══════════════════════════════════════════
+     CHAMPIONS SECTION
+  ══════════════════════════════════════════ */
+  .champions-section {
+    background: linear-gradient(180deg, var(--void-deep) 0%, rgba(13,16,32,0.3) 50%, var(--void-deep) 100%);
+  }
+
+  .champions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .champ-card {
+    position: relative;
+    background: var(--void-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 1.6rem 1.25rem;
+    text-align: center;
+    cursor: default;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .champ-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(6,182,212,0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .champ-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple-bright), var(--cyan-bright));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .champ-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--purple-bright);
+    box-shadow: 0 12px 40px rgba(139,92,246,0.35), 0 0 0 1px rgba(139,92,246,0.2);
+  }
+
+  .champ-card:hover::before { opacity: 1; }
+  .champ-card:hover::after  { transform: scaleX(1); }
+
+  .champ-avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    margin: 0 auto 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 900;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .champ-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .champ-avatar::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--purple-bright), var(--cyan-bright));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .cost-1 .champ-avatar { background: rgba(100,116,139,0.2); color: #94a3b8; }
+  .cost-2 .champ-avatar { background: rgba(16,185,129,0.15); color: #34d399; }
+  .cost-3 .champ-avatar { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .cost-4 .champ-avatar { background: rgba(139,92,246,0.2); color: #a78bfa; }
+  .cost-5 .champ-avatar { background: rgba(245,158,11,0.15); color: #fcd34d; }
+
+  .cost-badge {
+    position: absolute;
+    top: -3px; right: -3px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    border: 1.5px solid rgba(0,0,0,0.4);
+  }
+
+  .cost-1 .cost-badge { background: #475569; color: #e2e8f0; }
+  .cost-2 .cost-badge { background: #059669; color: #ecfdf5; }
+  .cost-3 .cost-badge { background: #2563eb; color: #eff6ff; }
+  .cost-4 .cost-badge { background: #7c3aed; color: #f5f3ff; }
+  .cost-5 .cost-badge { background: #d97706; color: #fffbeb; }
+
+  .champ-name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .champ-role {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .role-early  { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+  .role-mid    { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .role-late   { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+  .role-cap    { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+  .role-flex   { background: rgba(249,115,22,0.15); color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
+
+  .champ-stars {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 0.5rem;
+  }
+
+  .star { color: #d97706; font-size: 0.7rem; }
+
+  /* champion section group headers */
+  .champ-group-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    padding: 0.5rem 0 1rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 2rem;
+  }
+  .champ-group-label:first-child { border-top: none; margin-top: 0; }
+
+  /* ══════════════════════════════════════════
+     LEVELING TIMELINE
+  ══════════════════════════════════════════ */
+  .timeline-section {
+    background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(91,33,182,0.08) 0%, transparent 70%);
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .timeline-track {
+    position: absolute;
+    left: 50px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--purple-bright) 0%, var(--cyan-bright) 100%);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.5s ease;
+  }
+  .timeline-track.animated { transform: scaleY(1); }
+
+  .timeline-item {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .timeline-node {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    font-weight: 900;
+    position: relative;
+    z-index: 2;
+    border: 2px solid transparent;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .timeline-node:hover {
+    transform: scale(1.1);
+  }
+
+  .node-green  { background: rgba(16,185,129,0.15); color: #34d399; border-color: rgba(16,185,129,0.5); box-shadow: 0 0 20px rgba(16,185,129,0.2); }
+  .node-yellow { background: rgba(245,158,11,0.15); color: #fcd34d; border-color: rgba(245,158,11,0.5); box-shadow: 0 0 20px rgba(245,158,11,0.2); }
+  .node-red    { background: rgba(239,68,68,0.15); color: #f87171; border-color: rgba(239,68,68,0.5); box-shadow: 0 0 20px rgba(239,68,68,0.2); }
+  .node-purple { background: rgba(139,92,246,0.15); color: #a78bfa; border-color: rgba(139,92,246,0.5); box-shadow: 0 0 20px rgba(139,92,246,0.25); }
+  .node-gold   { background: rgba(245,158,11,0.2); color: #fcd34d; border-color: rgba(245,158,11,0.6); box-shadow: 0 0 30px rgba(245,158,11,0.35); }
+
+  .timeline-content {
+    flex: 1;
+    background: var(--void-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 1.6rem 2rem;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+  }
+
+  .timeline-content:hover {
+    border-color: var(--border-glow);
+    box-shadow: 0 4px 20px rgba(139,92,246,0.15);
+  }
+
+  .timeline-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-content p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .timeline-content p strong {
+    color: var(--purple-glow);
+  }
+
+  .tl-warning {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--danger);
+    background: var(--danger-soft);
+    border: 1px solid rgba(239,68,68,0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+  }
+
+  /* ══════════════════════════════════════════
+     STAGE GUIDE
+  ══════════════════════════════════════════ */
+  .stages-section {
+    background: linear-gradient(180deg, var(--void-deep) 0%, rgba(13,16,32,0.5) 50%, var(--void-deep) 100%);
+  }
+
+  .stages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+    gap: 2rem;
+  }
+
+  .stage-card {
+    background: var(--void-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .stage-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    border-color: var(--border-glow);
+    box-shadow: 0 16px 48px rgba(139,92,246,0.25);
+  }
+
+  .stage-header {
+    padding: 1.5rem 2.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .stage-badge {
+    font-family: var(--font-display);
+    font-size: clamp(0.55rem, 0.65vw + 0.35rem, 0.75rem);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.8rem;
+    border-radius: 2px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .badge-early { background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); }
+  .badge-mid   { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); }
+  .badge-late  { background: rgba(139,92,246,0.2); color: #a78bfa; border: 1px solid rgba(139,92,246,0.4); }
+
+  .stage-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.3rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    min-width: 0;
+  }
+
+  .stage-icon {
+    margin-left: auto;
+    font-size: clamp(1.3rem, 1.5vw + 0.8rem, 1.75rem);
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .stage-body {
+    padding: 1.75rem 2.25rem;
+  }
+
+  .stage-body ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .stage-body li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: clamp(0.8rem, 0.8vw + 0.45rem, 1.05rem);
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .stage-body li::before {
+    content: '›';
+    color: var(--purple-bright);
+    font-size: 1em;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+
+  .stage-body li strong { color: var(--cyan-bright); }
+  .stage-body li em { color: var(--purple-glow); font-style: normal; }
+
+  .kaisa-unlock {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(139, 92, 246, 0.15);
+    border-left: 3px solid #8b5cf6;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .kaisa-unlock-title {
+    font-family: var(--font-mono);
+    font-size: clamp(0.65rem, 0.7vw + 0.35rem, 0.78rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--purple-glow);
+    margin-bottom: 0.5rem;
+  }
+
+  .kaisa-unlock ul {
+    gap: 0.4rem;
+  }
+
+  .kaisa-unlock li {
+    font-size: clamp(0.75rem, 0.75vw + 0.42rem, 0.88rem) !important;
+    color: var(--text-dim) !important;
+  }
+
+  .kaisa-unlock li::before {
+    color: #8b5cf6 !important;
+  }
+
+  .rift-unlock {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(6, 182, 212, 0.12);
+    border-left: 3px solid #06b6d4;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .rift-unlock-title {
+    font-family: var(--font-mono);
+    font-size: clamp(0.65rem, 0.7vw + 0.35rem, 0.78rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #06b6d4;
+    margin-bottom: 0.5rem;
+  }
+
+  .rift-unlock ul { gap: 0.4rem; }
+
+  .rift-unlock li {
+    font-size: clamp(0.75rem, 0.75vw + 0.42rem, 0.88rem) !important;
+    color: var(--text-dim) !important;
+  }
+
+  .rift-unlock li::before { color: #06b6d4 !important; }
+
+  .voli-unlock {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(59, 130, 246, 0.13);
+    border-left: 3px solid #3b82f6;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .voli-unlock-title {
+    font-family: var(--font-mono);
+    font-size: clamp(0.65rem, 0.7vw + 0.35rem, 0.78rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+  }
+
+  .voli-unlock ul { gap: 0.4rem; }
+
+  .voli-unlock li {
+    font-size: clamp(0.75rem, 0.75vw + 0.42rem, 0.88rem) !important;
+    color: var(--text-dim) !important;
+  }
+
+  .voli-unlock li::before { color: #3b82f6 !important; }
+
+  .baron-unlock {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(245, 158, 11, 0.12);
+    border-left: 3px solid #f59e0b;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .baron-unlock-title {
+    font-family: var(--font-mono);
+    font-size: clamp(0.65rem, 0.7vw + 0.35rem, 0.78rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #f59e0b;
+    margin-bottom: 0.5rem;
+  }
+
+  .baron-unlock ul { gap: 0.4rem; }
+
+  .baron-unlock li {
+    font-size: clamp(0.75rem, 0.75vw + 0.42rem, 0.88rem) !important;
+    color: var(--text-dim) !important;
+  }
+
+  .baron-unlock li::before { color: #f59e0b !important; }
+
+  /* ══════════════════════════════════════════
+     ITEMS & MUTATIONS
+  ══════════════════════════════════════════ */
+  .items-section {
+    background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(6,182,212,0.06) 0%, transparent 70%);
+  }
+
+  .items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .items-grid { grid-template-columns: 1fr; }
+  }
+
+  .item-card {
+    background: var(--void-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .item-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--cyan-bright);
+    box-shadow: 0 12px 36px rgba(6,182,212,0.2);
+  }
+
+  .item-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .item-card-icon {
+    width: 50px; height: 50px;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: rgba(6,182,212,0.1);
+    border: 1px solid rgba(6,182,212,0.3);
+    overflow: hidden;
+  }
+
+  .item-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .item-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(139,92,246,0.3);
+  }
+
+  .item-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+  }
+
+  .item-card-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--cyan-bright);
+    letter-spacing: 0.15em;
+  }
+
+  .item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .item-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.65rem 1rem;
+    background: rgba(255,255,255,0.02);
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+
+  .item-row:hover { background: rgba(139,92,246,0.08); }
+
+  .item-rank {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 24px; height: 24px;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .rank-s { background: linear-gradient(135deg, #d97706, #f59e0b); color: #000; }
+  .rank-a { background: rgba(139,92,246,0.4); color: #a78bfa; border: 1px solid rgba(139,92,246,0.5); }
+  .rank-b { background: rgba(59,130,246,0.3); color: #60a5fa; border: 1px solid rgba(59,130,246,0.4); }
+
+  .item-name {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .item-desc {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-left: auto;
+    font-family: var(--font-mono);
+  }
+
+  /* ══════════════════════════════════════════
+     WIN CONDITION BANNER
+  ══════════════════════════════════════════ */
+  .win-banner {
+    position: relative;
+    padding: 8rem 2.5rem;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(180deg,
+      var(--void-deep) 0%,
+      rgba(91,33,182,0.12) 30%,
+      rgba(245,158,11,0.06) 60%,
+      var(--void-deep) 100%
+    );
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .win-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 100px,
+      rgba(139,92,246,0.03) 100px,
+      rgba(139,92,246,0.03) 101px
+    );
+    pointer-events: none;
+  }
+
+  .win-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  .win-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7vw, 6.5rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 40%, #d97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    text-shadow: none;
+  }
+
+  .win-sub {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    margin-bottom: 2.5rem;
+  }
+
+  .win-steps {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .win-step {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.25);
+    border-radius: 3px;
+    padding: 0.7rem 1.4rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fcd34d;
+    letter-spacing: 0.05em;
+  }
+
+  .win-step-num {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    background: rgba(245,158,11,0.3);
+    padding: 0.1rem 0.35rem;
+    border-radius: 2px;
+  }
+
+  .baron-glow {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; }
+    50%     { transform: translate(-50%,-50%) scale(1.15); opacity: 1; }
+  }
+
+  /* ══════════════════════════════════════════
+     REDACTED TEXT
+  ══════════════════════════════════════════ */
+  .redacted {
+    background: var(--text-dim);
+    color: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0 4px;
+    user-select: none;
+    display: inline-block;
+  }
+
+  .redacted:hover, .redacted.revealed {
+    background: rgba(139,92,246,0.15);
+    color: var(--purple-glow);
+  }
+
+  /* ══════════════════════════════════════════
+     INTERNAL NOTICE BAR
+  ══════════════════════════════════════════ */
+  .internal-bar {
+    background: linear-gradient(90deg, rgba(239,68,68,0.12) 0%, rgba(239,68,68,0.06) 50%, rgba(239,68,68,0.12) 100%);
+    border-top: 1px solid rgba(239,68,68,0.25);
+    border-bottom: 1px solid rgba(239,68,68,0.25);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    overflow: hidden;
+  }
+
+  .internal-bar-text {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--danger);
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+
+  @keyframes marquee {
+    0%   { transform: translateX(100vw); }
+    100% { transform: translateX(-100vw); }
+  }
+
+  /* ══════════════════════════════════════════
+     FOOTER
+  ══════════════════════════════════════════ */
+  footer {
+    padding: 4rem 2.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer p {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+  }
+
+  footer .footer-brand {
+    color: var(--purple-glow);
+  }
+
+  /* ══════════════════════════════════════════
+     MOBILE
+  ══════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .section { padding: 5rem 1.5rem; }
+    .champions-grid {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.75rem;
+      padding-bottom: 1rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .champ-card {
+      min-width: 155px;
+      scroll-snap-align: start;
+    }
+    .timeline-node { width: 70px; height: 70px; font-size: 1.2rem; }
+    .timeline-track { left: 35px; }
+    .stages-grid { grid-template-columns: 1fr; }
+    .win-steps { flex-direction: column; align-items: center; }
+    .traits-bar { gap: 0.75rem; }
+  }
+
+  /* ══════════════════════════════════════════
+     NAV
+  ══════════════════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(4,6,15,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139,92,246,0.12);
+    transition: background 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, var(--purple-glow), var(--cyan-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover { color: var(--purple-glow); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* ══════════════════════════════════════════
+     GLASSMORPHISM SEPARATOR
+  ══════════════════════════════════════════ */
+  .glass-sep {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--border-subtle) 30%, var(--border-glow) 50%, var(--border-subtle) 70%, transparent 100%);
+    margin: 0;
+  }
+
+  /* ══════════════════════════════════════════
+     STAT BADGES
+  ══════════════════════════════════════════ */
+  .stat-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    justify-content: center;
+  }
+
+  .stat-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--void-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 1rem 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--purple-glow);
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+  }
+
+  /* ══════════════════════════════════════════
+     MUTATION ICON
+  ══════════════════════════════════════════ */
+  .mutation-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(139,92,246,0.4);
+    background: rgba(139,92,246,0.1);
+  }
+
+  /* ══════════════════════════════════════════
+     POSITIONING SECTION
+  ══════════════════════════════════════════ */
+  .positioning-section {
+    background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(91,33,182,0.1) 0%, transparent 70%);
+  }
+
+  .board-tabs {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .board-tab {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.75rem 1.75rem;
+    border: 1px solid var(--border-subtle);
+    background: rgba(13,16,32,0.6);
+    color: var(--text-dim);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.25s ease;
+    outline: none;
+  }
+
+  .board-tab:hover {
+    color: var(--purple-glow);
+    border-color: var(--border-glow);
+  }
+
+  .board-tab.active {
+    background: rgba(124,58,237,0.25);
+    border-color: var(--purple-bright);
+    color: var(--purple-glow);
+    box-shadow: 0 0 16px rgba(139,92,246,0.3);
+  }
+
+  .board-tab .tab-sub {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: inherit;
+    opacity: 0.7;
+    margin-top: 1px;
+  }
+
+  .board-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .board-state { display: none; }
+  .board-state.active { display: block; }
+
+  .board-note {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.25rem;
+    padding: 0.4rem 1rem;
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .board-note-wrap { text-align: center; margin-bottom: 1rem; }
+
+  /* ── HEX BOARD (TFT offset grid) ── */
+  .hex-board-container {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(8,11,18,0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    min-width: 420px;
+  }
+
+  .hex-board {
+    display: flex;
+    flex-direction: column-reverse; /* row1 (front) at bottom visually */
+    gap: 4px;
+  }
+
+  .hex-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  /* Rows 2 and 4 from bottom are offset in TFT */
+  .hex-row.offset {
+    margin-left: 41px; /* half of (72px hex + 10px gap) */
+  }
+
+  /* Hex wrapper provides colored border via same clip-path behind */
+  .hex-wrap {
+    position: relative;
+    width: 72px;
+    flex-shrink: 0;
+  }
+
+  .hex-wrap .hex-border {
+    position: absolute;
+    inset: -4px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 0;
+  }
+
+  .hex-wrap.role-tank   .hex-border { background: #3b82f6; filter: blur(1px); }
+  .hex-wrap.role-carry  .hex-border { background: #8b5cf6; filter: blur(1px); }
+  .hex-wrap.role-flex-unit .hex-border { background: #6b7280; filter: blur(1px); }
+  .hex-wrap.role-baron  .hex-border { background: #f59e0b; filter: blur(2px); box-shadow: 0 0 12px rgba(245,158,11,0.6); }
+
+  .hex {
+    width: 72px;
+    height: 72px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s ease;
+    overflow: hidden;
+  }
+
+  .hex-empty {
+    background: rgba(13,16,32,0.55);
+  }
+
+  .hex-unit {
+    cursor: default;
+  }
+
+  .hex-unit:hover { transform: scale(1.1); }
+
+  .hex-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hex-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .hex-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 72px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<a href="../" id="back-hub"
+  style="position:fixed;top:1rem;left:1rem;z-index:9999;
+  background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.4);
+  color:#a78bfa;font-family:var(--font-display);font-size:0.8rem;
+  padding:0.5rem 1rem;border-radius:4px;cursor:pointer;
+  backdrop-filter:blur(8px);letter-spacing:0.1em;transition:all 0.2s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;"
+  onmouseover="this.style.background='rgba(139,92,246,0.3)';this.style.borderColor='rgba(139,92,246,0.7)'"
+  onmouseout="this.style.background='rgba(139,92,246,0.15)';this.style.borderColor='rgba(139,92,246,0.4)'">
+  &larr; COMP HUB
+</a>
+<button id="lang-toggle" onclick="toggleLang()"
+  style="position:fixed;top:1rem;right:1rem;z-index:9999;
+  background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.4);
+  color:#a78bfa;font-family:var(--font-display);font-size:0.8rem;
+  padding:0.5rem 1rem;border-radius:4px;cursor:pointer;
+  backdrop-filter:blur(8px);letter-spacing:0.1em;transition:all 0.2s;">
+  🇩🇪 DE
+</button>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">VOID // SET16</div>
+  <ul class="nav-links">
+    <li><a href="#champions">CHAMPIONS</a></li>
+    <li><a href="#leveling">LEVELING</a></li>
+    <li><a href="#stages">STAGES</a></li>
+    <li><a href="#positioning">POSITIONS</a></li>
+    <li><a href="#items">ITEMS</a></li>
+    <li><a href="#win">WIN CON</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <canvas id="particles-canvas"></canvas>
+  <div class="hero-content">
+    <div class="classified-stamp">⬛ CLASSIFIED ⬛</div>
+    <div class="hero-eyebrow">// INTERNAL STRATEGY DOCUMENT //</div>
+    <h1 class="hero-title">
+      <span class="hero-title-void">VOID</span>
+      <span class="hero-title-comp">COMP GUIDE</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-subtitle">
+      <span>SET 16</span> &nbsp;│&nbsp; <span>PATCH 16.4</span> &nbsp;│&nbsp; <span>9× VOID • 2× BRUISER • LONGSHOT</span>
+    </p>
+    <div class="stat-row" style="opacity:0;animation:fadeSlideUp 0.6s ease 1.4s forwards">
+      <div class="stat-badge">
+        <div class="stat-value">9×</div>
+        <div class="stat-label">VOID TRAIT</div>
+      </div>
+      <div class="stat-badge">
+        <div class="stat-value">10</div>
+        <div class="stat-label">FINAL LEVEL</div>
+      </div>
+      <div class="stat-badge">
+        <div class="stat-value">S+</div>
+        <div class="stat-label">TIER</div>
+      </div>
+    </div>
+    <div class="scroll-cta" style="margin-top:3rem">
+      <span data-i18n="hero.scroll">SCROLL TO BRIEFING</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTERNAL BAR ── -->
+<div class="internal-bar">
+  <div class="internal-bar-text">
+    ⚠ INTERNAL USE ONLY — ROWDY AI STRATEGY DOCUMENT — PATCH 16.4 — VOID COMPOSITION — NOT FOR PUBLIC DISTRIBUTION — 9× VOID ACTIVE — BARON NASHOR ENDGAME — PUSH TO LVL 10 — ⚠ INTERNAL USE ONLY — ROWDY AI STRATEGY DOCUMENT
+  </div>
+</div>
+
+<!-- ── TRAITS BAR ── -->
+<div class="traits-bar">
+  <div class="trait-pill">
+    <span class="trait-count">9×</span>
+    <span data-i18n="trait.void">VOID</span>
+  </div>
+  <div class="trait-pill trait-cyan">
+    <span class="trait-count">2×</span>
+    <span data-i18n="trait.bruiser">BRUISER</span>
+  </div>
+  <div class="trait-pill trait-cyan">
+    <span class="trait-count">1×</span>
+    <span data-i18n="trait.longshot">LONGSHOT</span>
+  </div>
+</div>
+<div class="glass-sep"></div>
+
+<!-- ── CHAMPIONS ── -->
+<section class="champions-section" id="champions">
+  <div class="section">
+    <div class="section-header reveal">
+      <div class="section-tag">// 01 // ROSTER</div>
+      <h2 class="section-title" data-i18n="section.champions">CHAMPION ROSTER</h2>
+    </div>
+
+    <div class="champ-group-label reveal">▸ EARLY GAME — STAGE 2-3</div>
+    <div class="champions-grid" style="margin-bottom:2.5rem">
+      <div class="champ-card cost-1 reveal reveal-delay-1">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'">
+          KM
+          <div class="cost-badge">1</div>
+        </div>
+        <div class="champ-name">KOG'MAW</div>
+        <div class="champ-role role-early">EARLY</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star" style="opacity:.2">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+      <div class="champ-card cost-2 reveal reveal-delay-2">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_malzahar/hud/tft16_malzahar_square.tft_set16.png" alt="Malzahar" loading="lazy" onerror="this.style.display='none'">
+          MZ
+          <div class="cost-badge">2</div>
+        </div>
+        <div class="champ-name">MALZAHAR</div>
+        <div class="champ-role role-early">EARLY</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+      <div class="champ-card cost-2 reveal reveal-delay-3">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'">
+          RS
+          <div class="cost-badge">2</div>
+        </div>
+        <div class="champ-name">REK'SAI</div>
+        <div class="champ-role role-early">EARLY</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+    </div>
+
+    <div class="champ-group-label reveal">▸ MID GAME — STAGE 3-4</div>
+    <div class="champions-grid" style="margin-bottom:2.5rem">
+      <div class="champ-card cost-3 reveal reveal-delay-1">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_chogath/hud/tft16_chogath_square.tft_set16.png" alt="Cho'Gath" loading="lazy" onerror="this.style.display='none'">
+          CG
+          <div class="cost-badge">3</div>
+        </div>
+        <div class="champ-name">CHO'GATH</div>
+        <div class="champ-role role-mid">MID</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+      <div class="champ-card cost-3 reveal reveal-delay-2">
+        <div class="champ-avatar" style="background:rgba(91,33,182,0.4)">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_riftherald/hud/tft16_riftherald_square.tft_set16.png" alt="Rift Herald" loading="lazy" onerror="this.style.display='none'">
+          RH
+          <div class="cost-badge">3</div>
+        </div>
+        <div class="champ-name">RIFT HERALD</div>
+        <div class="champ-role role-mid">MID</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+      <div class="champ-card cost-4 reveal reveal-delay-3">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kaisa/hud/tft16_kaisa_square.tft_set16.png" alt="Kai'Sa" loading="lazy" onerror="this.style.display='none'">
+          KS
+          <div class="cost-badge">4</div>
+        </div>
+        <div class="champ-name">KAI'SA</div>
+        <div class="champ-role role-mid">MID / CARRY</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+      <div class="champ-card cost-4 reveal reveal-delay-4">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_belveth/hud/tft16_belveth_square.tft_set16.png" alt="Bel'Veth" loading="lazy" onerror="this.style.display='none'">
+          BV
+          <div class="cost-badge">4</div>
+        </div>
+        <div class="champ-name">BEL'VETH</div>
+        <div class="champ-role role-mid">MID</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+    </div>
+
+    <div class="champ-group-label reveal">▸ LATE GAME — STAGE 4-5</div>
+    <div class="champions-grid" style="margin-bottom:2.5rem">
+      <div class="champ-card cost-4 reveal reveal-delay-1">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_volibear/hud/tft16_volibear_square.tft_set16.png" alt="Volibear" loading="lazy" onerror="this.style.display='none'">
+          VB
+          <div class="cost-badge">4</div>
+        </div>
+        <div class="champ-name">VOLIBEAR</div>
+        <div class="champ-role role-late">LATE</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+      <div class="champ-card cost-4 reveal reveal-delay-2">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_swain/hud/tft16_swain_square.tft_set16.png" alt="Swain" loading="lazy" onerror="this.style.display='none'">
+          SW
+          <div class="cost-badge">4</div>
+        </div>
+        <div class="champ-name">SWAIN</div>
+        <div class="champ-role role-flex">FLEX</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star" style="opacity:.2">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+      <div class="champ-card cost-4 reveal reveal-delay-3">
+        <div class="champ-avatar">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_shyvana/hud/tft16_shyvana_square.tft_set16.png" alt="Shyvana" loading="lazy" onerror="this.style.display='none'">
+          SH
+          <div class="cost-badge">4</div>
+        </div>
+        <div class="champ-name">SHYVANA</div>
+        <div class="champ-role role-flex">FLEX</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star" style="opacity:.2">★</span><span class="star" style="opacity:.2">★</span></div>
+      </div>
+    </div>
+
+    <div class="champ-group-label reveal">▸ CAP — LVL 10 FINALE</div>
+    <div class="champions-grid" style="max-width:180px">
+      <div class="champ-card cost-5 reveal" style="max-width:180px">
+        <div class="champ-avatar" style="background:rgba(245,158,11,0.25)">
+          <img class="champ-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_baronnashor/hud/tft16_baronnashor_square.tft_set16.png" alt="Baron Nashor" loading="lazy" onerror="this.style.display='none'">
+          BN
+          <div class="cost-badge">5</div>
+        </div>
+        <div class="champ-name">BARON NASHOR</div>
+        <div class="champ-role role-cap">★ CAP ★</div>
+        <div class="champ-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glass-sep"></div>
+
+<!-- ── LEVELING TIMELINE ── -->
+<section class="timeline-section" id="leveling">
+  <div class="section">
+    <div class="section-header reveal">
+      <div class="section-tag">// 02 // ECONOMY</div>
+      <h2 class="section-title" data-i18n="section.leveling">LEVELING GUIDE</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-track" id="timeline-track"></div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-node node-green">4</div>
+        <div class="timeline-content">
+          <h3>LEVEL 4 — CONDITIONAL</h3>
+          <p data-i18n="lvl.4.cond">Level up if you have <strong>upgrades available</strong> + a good item component. Don't force it—eco first.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-node node-green">5</div>
+        <div class="timeline-content">
+          <h3>LEVEL 5 — ALMOST ALWAYS</h3>
+          <p data-i18n="lvl.5.cond">Level to 5 <strong>always</strong> unless you're on a 3× loss streak and looking to eco hard.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-node node-yellow">6</div>
+        <div class="timeline-content">
+          <h3>LEVEL 6 — WINSTREAK / RICH</h3>
+          <p data-i18n="lvl.6.cond">Level on <strong>4+ winstreak</strong> OR if you can maintain above <strong>40g</strong> after leveling.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-node node-yellow">7</div>
+        <div class="timeline-content">
+          <h3>LEVEL 7 — ECONOMY CHECK</h3>
+          <p data-i18n="lvl.7.cond">Level if you can stay <strong>above 30g</strong> after the investment. Preserve interest thresholds.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-4">
+        <div class="timeline-node node-red">8</div>
+        <div class="timeline-content">
+          <h3>LEVEL 8 — KEY POWER SPIKE</h3>
+          <p data-i18n="lvl.8.cond">Roll aggressively for <strong>Kai'Sa 2★</strong> and <strong>Rift Herald 2★</strong>. Push to Level 9 after hitting.</p>
+          <div class="tl-warning">⚠ DO NOT go below 10g while rolling</div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-5">
+        <div class="timeline-node node-purple">9</div>
+        <div class="timeline-content">
+          <h3>LEVEL 9 — HP DEPENDENT</h3>
+          <p data-i18n="lvl.9.cond">
+            <strong>High HP →</strong> Wait until Stage 5-5 &nbsp;|&nbsp;
+            <strong>Medium HP →</strong> Roll 20g first &nbsp;|&nbsp;
+            <strong>Low HP →</strong> Level ASAP to stabilize with Wukong → Volibear
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-node node-gold">10</div>
+        <div class="timeline-content">
+          <h3>LEVEL 10 — ENDGAME</h3>
+          <p data-i18n="lvl.10.cond">Only when carry is <strong>fully itemized + upgraded</strong>. Slot in <strong>Baron Nashor</strong>. Transfer best items + best Void mutation.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="glass-sep"></div>
+
+<!-- ── STAGE GUIDE ── -->
+<section class="stages-section" id="stages">
+  <div class="section">
+    <div class="section-header reveal">
+      <div class="section-tag">// 03 // STRATEGY</div>
+      <h2 class="section-title" data-i18n="section.stages">STAGE BREAKDOWN</h2>
+    </div>
+
+    <div class="stages-grid">
+      <div class="stage-card reveal reveal-delay-1">
+        <div class="stage-header">
+          <div class="stage-badge badge-early" data-i18n="stage.early.badge">STAGE 2-3</div>
+          <div class="stage-title" data-i18n="stage.early.title">Early Game</div>
+          <div class="stage-icon">⚔</div>
+        </div>
+        <div class="stage-body">
+          <ul>
+            <li data-i18n="stage.early.b1"><strong>Slam items aggressively</strong> — don't save components</li>
+            <li data-i18n="stage.early.b2"><em>Play for winstreak</em> to build gold interest buffer</li>
+            <li data-i18n="stage.early.b3">Run Kog'Maw + Malzahar + Rek'Sai as core</li>
+            <li data-i18n="stage.early.b4">Keep strongest available board — don't force economy at cost of HP</li>
+          </ul>
+          <div class="rift-unlock">
+            <div class="rift-unlock-title" data-i18n="unlock.rift.title">🌀 RIFT HERALD UNLOCK</div>
+            <ul>
+              <li data-i18n="unlock.rift.b1">Have <strong>Void active</strong> for <strong>8 player combats</strong></li>
+              <li data-i18n="unlock.rift.b2">No level requirement — auto-unlocks after 8 Void combats</li>
+              <li data-i18n="unlock.rift.b3">Tip: <strong>2 Void units</strong> already activate the trait — get them on board ASAP to start the 8-combat counter</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-card reveal reveal-delay-2">
+        <div class="stage-header">
+          <div class="stage-badge badge-mid" data-i18n="stage.mid.badge">STAGE 4</div>
+          <div class="stage-title" data-i18n="stage.mid.title">Mid Game</div>
+          <div class="stage-icon">🎯</div>
+        </div>
+        <div class="stage-body">
+          <ul>
+            <li data-i18n="stage.mid.b1">Roll on <strong>Level 8</strong> for key 2-stars</li>
+            <li data-i18n="stage.mid.b2">Priority: <em>Kai'Sa 2★</em> first, then <em>Rift Herald 2★</em></li>
+            <li data-i18n="stage.mid.b3">Push to <strong>Level 9</strong> after stabilizing</li>
+            <li data-i18n="stage.mid.b4">Flex <em>Swain</em> or <em>Shyvana</em> if available</li>
+            <li data-i18n="stage.mid.b5">Never roll below 10g — interest matters</li>
+          </ul>
+          <div class="kaisa-unlock">
+            <div class="kaisa-unlock-title" data-i18n="unlock.kaisa.title">🔓 KAI'SA UNLOCK</div>
+            <ul>
+              <li data-i18n="unlock.kaisa.b1">Reach <strong>Level 7</strong></li>
+              <li data-i18n="unlock.kaisa.b2">Have a <strong>Longshot</strong> unit on board with <em>3 items equipped</em></li>
+              <li data-i18n="unlock.kaisa.b3">Both conditions met → Kai'Sa unlocks automatically</li>
+            </ul>
+          </div>
+          <div class="voli-unlock">
+            <div class="voli-unlock-title" data-i18n="unlock.voli.title">⚡ VOLIBEAR UNLOCK</div>
+            <ul>
+              <li data-i18n="unlock.voli.b1">Reach <strong>Level 8</strong></li>
+              <li data-i18n="unlock.voli.b2">Have a unit that starts combat with at least <strong>3800 HP</strong></li>
+              <li data-i18n="unlock.voli.b3">Tip: Rift Herald or Cho'Gath with tank items easily hit this threshold</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-card reveal reveal-delay-3">
+        <div class="stage-header">
+          <div class="stage-badge badge-late" data-i18n="stage.late.badge">STAGE 5+</div>
+          <div class="stage-title" data-i18n="stage.late.title">Late Game</div>
+          <div class="stage-icon">👑</div>
+        </div>
+        <div class="stage-body">
+          <ul>
+            <li data-i18n="stage.late.b1">Full <strong>9 Void + Bruiser</strong> board active</li>
+            <li data-i18n="stage.late.b2">Wukong → <em>Volibear</em> slot for Bruiser trait</li>
+            <li data-i18n="stage.late.b3">Push <strong>Level 10</strong> when carry is itemized</li>
+            <li data-i18n="stage.late.b4">Slot in <em>Baron Nashor</em> as capstone unit</li>
+          </ul>
+          <div class="baron-unlock">
+            <div class="baron-unlock-title" data-i18n="unlock.baron.title">👑 BARON NASHOR UNLOCK</div>
+            <ul>
+              <li data-i18n="unlock.baron.b1">Reach <strong>Level 10</strong></li>
+              <li data-i18n="unlock.baron.b2">Field <strong>7 unique Void units</strong> simultaneously</li>
+              <li data-i18n="unlock.baron.b3">Baron counts as <strong>2 team slots</strong> — plan your roster accordingly</li>
+              <li data-i18n="unlock.baron.b4">Tip: Transfer your best items to Baron immediately after unlocking</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glass-sep"></div>
+
+<!-- ── POSITIONING ── -->
+<section class="positioning-section" id="positioning">
+  <div class="section">
+    <div class="section-header reveal">
+      <div class="section-tag">// 04 // POSITIONING</div>
+      <h2 class="section-title" data-i18n="section.positioning">BOARD POSITIONING</h2>
+    </div>
+
+    <div class="board-tabs reveal">
+      <button class="board-tab active" onclick="switchBoard('lvl4', this)">
+        LVL 4
+        <span class="tab-sub" data-i18n="board.lvl4.sub">Early Opener</span>
+      </button>
+      <button class="board-tab" onclick="switchBoard('lvl6', this)">
+        LVL 6
+        <span class="tab-sub" data-i18n="board.lvl6.sub">Early</span>
+      </button>
+      <button class="board-tab" onclick="switchBoard('lvl8', this)">
+        LVL 8
+        <span class="tab-sub" data-i18n="board.lvl8.sub">Stable</span>
+      </button>
+      <button class="board-tab" onclick="switchBoard('lvl9', this)">
+        LVL 9
+        <span class="tab-sub" data-i18n="board.lvl9.sub">Roll for Kai'Sa ⭐⭐ — Baron comes on Lvl 10</span>
+      </button>
+      <button class="board-tab" onclick="switchBoard('lvl10', this)">
+        LVL 10
+        <span class="tab-sub" data-i18n="board.lvl10.sub">Full Cap</span>
+      </button>
+    </div>
+
+    <!-- LVL 4 BOARD -->
+    <div class="board-state active" id="board-lvl4">
+      <div class="board-note-wrap">
+        <span class="board-note" data-i18n="board.lvl4.note">2 Void active — start the Rift Herald counter</span>
+      </div>
+      <div class="board-wrapper reveal">
+        <div class="hex-board-container">
+          <div class="hex-board">
+            <!-- Row 4 (back) — HTML order first = visually top (column-reverse) — even row → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 KOG --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 3 — odd → no offset -->
+            <div class="hex-row">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 2 — even → offset -->
+            <div class="hex-row offset">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 1 (front) — odd → no offset -->
+            <div class="hex-row">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 REK --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">REK</span></div>
+              <!-- c4 CHO --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_chogath/hud/tft16_chogath_square.tft_set16.png" alt="Cho'Gath" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CHO</span></div>
+              <!-- c5 BLZ --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_blitzcrank/hud/tft16_blitzcrank_square.tft_set16.png" alt="Blitzcrank" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">BLZ</span></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LVL 6 BOARD -->
+    <div class="board-state" id="board-lvl6">
+      <div class="board-note-wrap">
+        <span class="board-note" data-i18n="board.lvl6.note">4 Void active — Rift Herald counter running</span>
+      </div>
+      <div class="board-wrapper reveal">
+        <div class="hex-board-container">
+          <div class="hex-board">
+            <!-- Row 4 (back) — HTML order first = visually top (column-reverse) — even row → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 MAL (mirror of c5) --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_malzahar/hud/tft16_malzahar_square.tft_set16.png" alt="Malzahar" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">MAL</span></div>
+              <!-- c4 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c5 KOG (mirror of c3) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 CAI --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_caitlyn/hud/tft16_caitlyn_square.tft_set16.png" alt="Caitlyn" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CAI</span></div>
+            </div>
+            <!-- Row 3 — odd → no offset -->
+            <div class="hex-row">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 2 — even → offset -->
+            <div class="hex-row offset">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 1 (front) — odd → no offset -->
+            <div class="hex-row">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 BLZ --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_blitzcrank/hud/tft16_blitzcrank_square.tft_set16.png" alt="Blitzcrank" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">BLZ</span></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 REK (center) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">REK</span></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 CHO (mirror of c2) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_chogath/hud/tft16_chogath_square.tft_set16.png" alt="Cho'Gath" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CHO</span></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LVL 8 BOARD -->
+    <div class="board-state" id="board-lvl8">
+      <div class="board-note-wrap">
+        <span class="board-note" data-i18n="board.lvl8.note">STABLE 8-UNIT CORE — ROLL FOR KAI'SA 2★ + RIFT HERALD 2★</span>
+      </div>
+      <div class="board-wrapper reveal">
+        <div class="hex-board-container">
+          <div class="hex-board">
+            <!-- Row 4 (back) — even → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 MAL (mirror of c6) --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_malzahar/hud/tft16_malzahar_square.tft_set16.png" alt="Malzahar" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">MAL</span></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 KAI (center) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kaisa/hud/tft16_kaisa_square.tft_set16.png" alt="Kai'Sa" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KAI</span></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 KOG (mirror of c2) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 3 — odd → no offset -->
+            <div class="hex-row">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 2 — even → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c5 BEL (mirror of c3) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_belveth/hud/tft16_belveth_square.tft_set16.png" alt="Bel'Veth" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">BEL</span></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 1 (front) — odd → no offset -->
+            <div class="hex-row">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 REK (mirror of c6) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">REK</span></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 RFT (center) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_riftherald/hud/tft16_riftherald_square.tft_set16.png" alt="Rift Herald" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">RFT</span></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 CHO (mirror of c1) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_chogath/hud/tft16_chogath_square.tft_set16.png" alt="Cho'Gath" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CHO</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LVL 9 BOARD -->
+    <div class="board-state" id="board-lvl9">
+      <div class="board-note-wrap">
+        <span class="board-note" data-i18n="board.lvl9.note">POWER SPIKE — ROLL FOR KAI'SA ⭐⭐ — BARON COMES ON LVL 10</span>
+      </div>
+      <div class="board-wrapper reveal">
+        <div class="hex-board-container">
+          <div class="hex-board">
+            <!-- Row 4 (back) — even → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 MAL --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_malzahar/hud/tft16_malzahar_square.tft_set16.png" alt="Malzahar" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">MAL</span></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 KAI (center) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kaisa/hud/tft16_kaisa_square.tft_set16.png" alt="Kai'Sa" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KAI</span></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 KOG --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 3 — odd → no offset -->
+            <div class="hex-row">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 2 — even → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 BEL --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_belveth/hud/tft16_belveth_square.tft_set16.png" alt="Bel'Veth" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">BEL</span></div>
+            </div>
+            <!-- Row 1 (front) — odd → no offset -->
+            <div class="hex-row">
+              <!-- c1 SWN (tank/frontline) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_swain/hud/tft16_swain_square.tft_set16.png" alt="Swain" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">SWN</span></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 REK --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">REK</span></div>
+              <!-- c4 VOL (center) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_volibear/hud/tft16_volibear_square.tft_set16.png" alt="Volibear" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">VOL</span></div>
+              <!-- c5 RFT --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_riftherald/hud/tft16_riftherald_square.tft_set16.png" alt="Rift Herald" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">RFT</span></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 CHO --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_chogath/hud/tft16_chogath_square.tft_set16.png" alt="Cho'Gath" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CHO</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LVL 10 BOARD -->
+    <div class="board-state" id="board-lvl10">
+      <div class="board-note-wrap">
+        <span class="board-note" data-i18n="board.lvl10.note">Baron at center front — charges into the enemy backline!</span>
+      </div>
+      <div class="board-wrapper reveal">
+        <div class="hex-board-container">
+          <div class="hex-board">
+            <!-- Row 4 (back) — even → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 MAL (mirror of c6) --><div class="hex-cell"><div class="hex-wrap role-flex-unit"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_malzahar/hud/tft16_malzahar_square.tft_set16.png" alt="Malzahar" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">MAL</span></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 KAI (center) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kaisa/hud/tft16_kaisa_square.tft_set16.png" alt="Kai'Sa" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KAI</span></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 KOG (mirror of c2) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kogmaw/hud/tft16_kogmaw_square.tft_set16.png" alt="Kog'Maw" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">KOG</span></div>
+              <!-- c7 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 3 — odd → no offset -->
+            <div class="hex-row">
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+            </div>
+            <!-- Row 2 — even → offset -->
+            <div class="hex-row offset">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c3 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c4 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c5 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 BEL (mirror of c1) --><div class="hex-cell"><div class="hex-wrap role-carry"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_belveth/hud/tft16_belveth_square.tft_set16.png" alt="Bel'Veth" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">BEL</span></div>
+            </div>
+            <!-- Row 1 (front) — odd → no offset -->
+            <div class="hex-row">
+              <!-- c1 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c2 REK (mirror of c6) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_reksai/hud/tft16_reksai_square.tft_set16.png" alt="Rek'Sai" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">REK</span></div>
+              <!-- c3 VOL (mirror of c5) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_volibear/hud/tft16_volibear_square.tft_set16.png" alt="Volibear" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">VOL</span></div>
+              <!-- c4 BAR (center) --><div class="hex-cell"><div class="hex-wrap role-baron"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_baronnashor/hud/tft16_baronnashor_square.tft_set16.png" alt="Baron Nashor" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label" style="color:#fcd34d">BAR</span></div>
+              <!-- c5 RFT (mirror of c3) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_riftherald/hud/tft16_riftherald_square.tft_set16.png" alt="Rift Herald" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">RFT</span></div>
+              <!-- c6 --><div class="hex-cell"><div class="hex-wrap"><div class="hex hex-empty"></div></div></div>
+              <!-- c7 CHO (mirror of c1) --><div class="hex-cell"><div class="hex-wrap role-tank"><div class="hex-border"></div><div class="hex hex-unit"><img class="hex-portrait" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_chogath/hud/tft16_chogath_square.tft_set16.png" alt="Cho'Gath" loading="lazy" onerror="this.style.display='none'"></div></div><span class="hex-label">CHO</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:0.4rem;font-family:var(--font-mono);font-size:0.65rem;color:#60a5fa">
+          <div style="width:12px;height:12px;border-radius:50%;border:2px solid #3b82f6"></div> TANK
+        </div>
+        <div style="display:flex;align-items:center;gap:0.4rem;font-family:var(--font-mono);font-size:0.65rem;color:#a78bfa">
+          <div style="width:12px;height:12px;border-radius:50%;border:2px solid #8b5cf6"></div> CARRY
+        </div>
+        <div style="display:flex;align-items:center;gap:0.4rem;font-family:var(--font-mono);font-size:0.65rem;color:#9ca3af">
+          <div style="width:12px;height:12px;border-radius:50%;border:2px solid #6b7280"></div> FLEX
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="glass-sep"></div>
+
+<!-- ── ITEMS & MUTATIONS ── -->
+<section class="items-section" id="items">
+  <div class="section">
+    <div class="section-header reveal">
+      <div class="section-tag">// 05 // ITEMIZATION</div>
+      <h2 class="section-title" data-i18n="section.items">ITEMS &amp; MUTATIONS</h2>
+    </div>
+
+    <div class="items-grid" style="grid-template-columns:1fr 1fr">
+      <!-- KAI'SA ITEMS -->
+      <div class="item-card reveal reveal-delay-1">
+        <div class="item-card-header">
+          <div class="item-card-icon">
+            <img class="item-card-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_kaisa/hud/tft16_kaisa_square.tft_set16.png" alt="Kai'Sa" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div>
+            <div class="item-card-title">KAI'SA — ITEMS</div>
+            <div class="item-card-sub" data-i18n="items.kaisa.sub">HYBRID CARRY BUILD</div>
+          </div>
+        </div>
+        <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_guinsoosrageblade.tft_set13.png" alt="Guinsoo's Rageblade" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_hextechgunblade.tft_set13.png" alt="Hextech Gunblade" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_madredsbloodrazor.tft_set13.png" alt="Giant Slayer" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div style="padding: 0.4rem 1.5rem 0; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim);">
+          ★ 59.7% TOP 4 RATE · AVG PLACE 4.03 · SOURCE: METABOT.GG
+        </div>
+        <div class="item-list">
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_guinsoosrageblade.tft_set13.png" alt="Guinsoo's Rageblade" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Guinsoo's Rageblade</div>
+            <div class="item-desc">AS + AP/AD</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_hextechgunblade.tft_set13.png" alt="Hextech Gunblade" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Hextech Gunblade</div>
+            <div class="item-desc">OMNIVAMP</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_madredsbloodrazor.tft_set13.png" alt="Giant Slayer" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Giant Slayer</div>
+            <div class="item-desc">% MAX HP</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_lastwhisper.tft_set13.png" alt="Last Whisper" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Last Whisper</div>
+            <div class="item-desc">ARMOR SHRED</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-b">B</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_jeweledgauntlet.tft_set13.png" alt="Jeweled Gauntlet" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Jeweled Gauntlet</div>
+            <div class="item-desc">CRIT</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KAI'SA MUTATIONS -->
+      <div class="item-card reveal reveal-delay-2">
+        <div class="item-card-header">
+          <div class="item-card-icon">🧬</div>
+          <div>
+            <div class="item-card-title">KAI'SA — MUTATIONS</div>
+            <div class="item-card-sub">VOID AUGMENTS</div>
+          </div>
+        </div>
+        <div class="item-list">
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="mutation-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft16_voidmutation_spitterspines.tft_set16.png" alt="Spitter Spines" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Spitter Spines</div>
+            <div class="item-desc">BURST</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="mutation-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft16_voidmutation_leechingnucleus.tft_set16.png" alt="Leeching Nucleus" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Leeching Nucleus</div>
+            <div class="item-desc">SUSTAIN</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-b">B</div>
+            <img class="mutation-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft16_voidmutation_adrenalinemodules.tft_set16.png" alt="Adrenaline Modules" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Adrenaline Modules</div>
+            <div class="item-desc">SPEED</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARON NASHOR ITEMS -->
+      <div class="item-card reveal reveal-delay-3">
+        <div class="item-card-header">
+          <div class="item-card-icon">
+            <img class="item-card-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_baronnashor/hud/tft16_baronnashor_square.tft_set16.png" alt="Baron Nashor" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div>
+            <div class="item-card-title">BARON NASHOR — ITEMS</div>
+            <div class="item-card-sub" data-i18n="items.baron.sub">AD CARRY / BRUISER</div>
+          </div>
+        </div>
+        <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_infinityedge.tft_set13.png" alt="Infinity Edge" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_madredsbloodrazor.tft_set13.png" alt="Giant Slayer" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_steraksgage.tft_set13.png" alt="Sterak's Gage" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div style="padding: 0.4rem 1.5rem 0; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim);">
+          ★ 92.1% TOP 4 RATE · AVG PLACE 2.10 · SOURCE: METABOT.GG
+        </div>
+        <div class="item-list">
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_infinityedge.tft_set13.png" alt="Infinity Edge" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Infinity Edge</div>
+            <div class="item-desc">CRIT</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_madredsbloodrazor.tft_set13.png" alt="Giant Slayer" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Giant Slayer</div>
+            <div class="item-desc">% MAX HP</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_steraksgage.tft_set13.png" alt="Sterak's Gage" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Sterak's Gage</div>
+            <div class="item-desc">SHIELD</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_deathblade.tft_set13.png" alt="Deathblade" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Deathblade</div>
+            <div class="item-desc">AD STACK</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-b">B</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_bloodthirster.tft_set13.png" alt="Bloodthirster" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Bloodthirster</div>
+            <div class="item-desc">LIFESTEAL</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border-subtle)">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:.15em;margin-bottom:.5rem">BARON MUTATION</div>
+          <div class="item-row" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.06)">
+            <div class="item-rank rank-s">S</div>
+            <img class="mutation-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft16_voidmutation_spitterspines.tft_set16.png" alt="Spitter Spines" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name" style="color:#fcd34d">Spitter Spines</div>
+            <div class="item-desc">LVL 10</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIFT HERALD ITEMS -->
+      <div class="item-card reveal reveal-delay-4">
+        <div class="item-card-header">
+          <div class="item-card-icon">
+            <img class="item-card-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_riftherald/hud/tft16_riftherald_square.tft_set16.png" alt="Rift Herald" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div>
+            <div class="item-card-title">RIFT HERALD — ITEMS</div>
+            <div class="item-card-sub" data-i18n="items.herald.sub">TANK / BRUISER BUILD</div>
+          </div>
+        </div>
+        <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_warmogsarmor.tft_set13.png" alt="Warmog's Armor" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_gargoylestoneplate.tft_set13.png" alt="Gargoyle Stoneplate" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_bramblevest.tft_set13.png" alt="Bramble Vest" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div style="padding: 0.4rem 1.5rem 0; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim);">
+          ★ 60.8% TOP 4 RATE · AVG PLACE 3.99 · SOURCE: METABOT.GG
+        </div>
+        <div class="item-list">
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_warmogsarmor.tft_set13.png" alt="Warmog's Armor" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Warmog's Armor</div>
+            <div class="item-desc">HP REGEN</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_bramblevest.tft_set13.png" alt="Bramble Vest" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Bramble Vest</div>
+            <div class="item-desc">REFLECT</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_gargoylestoneplate.tft_set13.png" alt="Gargoyle Stoneplate" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Gargoyle Stoneplate</div>
+            <div class="item-desc">ARMOR/MR</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_frozenheart.tft_set13.png" alt="Protector's Vow" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Protector's Vow</div>
+            <div class="item-desc">SHIELD</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-b">B</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_dragonsclaw.tft_set13.png" alt="Dragon's Claw" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Dragon's Claw</div>
+            <div class="item-desc">MR</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border-subtle)">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:.15em;margin-bottom:.5rem">HERALD MUTATION</div>
+          <div class="item-row" style="border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.06)">
+            <div class="item-rank rank-s">S</div>
+            <img class="mutation-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft16_voidmutation_ironcarapace.tft_set16.png" alt="Iron Carapace" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name" style="color:#60a5fa">Iron Carapace</div>
+            <div class="item-desc">TANK</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BEL'VETH ITEMS — full width -->
+      <div class="item-card reveal reveal-delay-1" style="grid-column:1/-1">
+        <div class="item-card-header">
+          <div class="item-card-icon">
+            <img class="item-card-img" src="https://raw.communitydragon.org/latest/game/assets/characters/tft16_belveth/hud/tft16_belveth_square.tft_set16.png" alt="Bel'Veth" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div>
+            <div class="item-card-title">BEL'VETH — ITEMS</div>
+            <div class="item-card-sub" data-i18n="items.belveth.sub">SLAYER CARRY</div>
+          </div>
+        </div>
+        <div class="item-slots" style="display:flex;gap:0.5rem;padding:0.75rem 1.5rem 0;align-items:center;">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_infinityedge.tft_set13.png" alt="Infinity Edge" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_guinsoosrageblade.tft_set13.png" alt="Guinsoo's Rageblade" loading="lazy" onerror="this.style.display='none'">
+          <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_titansresolve.tft_set13.png" alt="Titan's Resolve" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div style="padding: 0.4rem 1.5rem 0; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim);">
+          ★ NO BUILD DATA · KIT-BASED RECOMMENDATION · SOURCE: METABOT.GG
+        </div>
+        <div class="item-list">
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_infinityedge.tft_set13.png" alt="Infinity Edge" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Infinity Edge</div>
+            <div class="item-desc">CRIT</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-s">S</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_guinsoosrageblade.tft_set13.png" alt="Guinsoo's Rageblade" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Guinsoo's Rageblade</div>
+            <div class="item-desc">AS STACK</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_titansresolve.tft_set13.png" alt="Titan's Resolve" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Titan's Resolve</div>
+            <div class="item-desc">STACK</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-a">A</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_lastwhisper.tft_set13.png" alt="Last Whisper" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Last Whisper</div>
+            <div class="item-desc">ARMOR SHRED</div>
+          </div>
+          <div class="item-row">
+            <div class="item-rank rank-b">B</div>
+            <img class="item-icon" src="https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/maps/tft/icons/items/hexcore/tft_item_madredsbloodrazor.tft_set13.png" alt="Giant Slayer" loading="lazy" onerror="this.style.display='none'">
+            <div class="item-name">Giant Slayer</div>
+            <div class="item-desc">% MAX HP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glass-sep"></div>
+
+<!-- ── WIN CONDITION ── -->
+<section class="win-banner" id="win">
+  <div class="baron-glow"></div>
+  <div class="reveal">
+    <div class="win-eyebrow">// ENDGAME PROTOCOL //</div>
+    <h2 class="win-title" data-i18n="win.title">PUSH TO<br>LEVEL 10</h2>
+    <p class="win-sub" data-i18n="win.sub">Baron Nashor unlocked — Transfer items — Equip best Void mutation</p>
+    <div class="win-steps">
+      <div class="win-step">
+        <span class="win-step-num">01</span>
+        Carry Itemized + Upgraded
+      </div>
+      <div class="win-step">
+        <span class="win-step-num">02</span>
+        Reach Level 10
+      </div>
+      <div class="win-step">
+        <span class="win-step-num">03</span>
+        Slot Baron Nashor
+      </div>
+      <div class="win-step">
+        <span class="win-step-num">04</span>
+        Transfer Items
+      </div>
+      <div class="win-step">
+        <span class="win-step-num">05</span>
+        Best Void Mutation
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTERNAL NOTICE BAR BOTTOM ── -->
+<div class="internal-bar">
+  <div class="internal-bar-text" style="animation-delay:-10s">
+    ⬛ DOCUMENT ID: VOID-S16-P16.4-ROWDY — DISTRIBUTION: RESTRICTED — CLASSIFICATION: INTERNAL — FOR AUTHORIZED PERSONNEL ONLY — ROWDY AI STRATEGY NETWORK ⬛
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>
+    Guide by <span class="footer-brand">Rowdy AI</span> &nbsp;•&nbsp; TFT Set 16 &nbsp;•&nbsp; Patch 16.4 &nbsp;•&nbsp; <span class="redacted" onclick="this.classList.toggle('revealed')">AUTHORIZED INTEL</span>
+  </p>
+</footer>
+
+<script>
+  /* ══════════════════════════════════════════
+     PARTICLE CANVAS
+  ══════════════════════════════════════════ */
+  (function() {
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animId;
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    const COLORS = ['rgba(139,92,246,', 'rgba(167,139,250,', 'rgba(6,182,212,', 'rgba(91,33,182,'];
+
+    function createParticle() {
+      return {
+        x:    Math.random() * canvas.width,
+        y:    Math.random() * canvas.height,
+        r:    Math.random() * 2.5 + 0.5,
+        vx:   (Math.random() - 0.5) * 0.35,
+        vy:   (Math.random() - 0.5) * 0.35 - 0.15,
+        a:    Math.random() * 0.6 + 0.1,
+        va:   (Math.random() - 0.5) * 0.003,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        life: 0,
+        maxLife: Math.random() * 400 + 200
+      };
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({ length: 120 }, createParticle);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.a += p.va;
+        p.life++;
+
+        if (p.a < 0) p.va = Math.abs(p.va);
+        if (p.a > 0.7) p.va = -Math.abs(p.va);
+
+        // Wrap
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+        if (p.y < -10) p.y = canvas.height + 10;
+        if (p.y > canvas.height + 10) p.y = -10;
+
+        if (p.life > p.maxLife) particles[i] = createParticle();
+
+        // Draw
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.a + ')';
+        ctx.fill();
+
+        // Glow for larger particles
+        if (p.r > 1.5) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 2.5);
+          grad.addColorStop(0, p.color + (p.a * 0.3) + ')');
+          grad.addColorStop(1, p.color + '0)');
+          ctx.fillStyle = grad;
+          ctx.fill();
+        }
+      });
+
+      // Draw connecting lines between close particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            const alpha = (1 - dist / 100) * 0.12;
+            ctx.strokeStyle = `rgba(139,92,246,${alpha})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => { resize(); });
+    init();
+    draw();
+  })();
+
+  /* ══════════════════════════════════════════
+     SCROLL REVEAL
+  ══════════════════════════════════════════ */
+  (function() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  })();
+
+  /* ══════════════════════════════════════════
+     TIMELINE LINE ANIMATION
+  ══════════════════════════════════════════ */
+  (function() {
+    const track = document.getElementById('timeline-track');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          track.classList.add('animated');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(track.parentElement);
+  })();
+
+  /* ══════════════════════════════════════════
+     SMOOTH SCROLL
+  ══════════════════════════════════════════ */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ══════════════════════════════════════════
+     SCROLL CTA
+  ══════════════════════════════════════════ */
+  document.querySelector('.scroll-cta').addEventListener('click', () => {
+    document.querySelector('#champions').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  /* ══════════════════════════════════════════
+     BOARD POSITIONING TABS
+  ══════════════════════════════════════════ */
+  function switchBoard(level, btn) {
+    // Hide all boards
+    document.querySelectorAll('.board-state').forEach(el => el.classList.remove('active'));
+    // Deactivate all tabs
+    document.querySelectorAll('.board-tab').forEach(el => el.classList.remove('active'));
+    // Show selected board and activate tab
+    document.getElementById('board-' + level).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+<script>
+  /* ══════════════════════════════════════════
+     I18N — LANGUAGE TOGGLE
+  ══════════════════════════════════════════ */
+  const translations = {
+    en: {
+      "hero.scroll": "SCROLL TO ACCESS",
+      "section.champions": "CHAMPIONS",
+      "section.leveling": "LEVELING GUIDE",
+      "section.positioning": "POSITIONING",
+      "section.stages": "STAGE BREAKDOWN",
+      "section.items": "ITEMS & MUTATIONS",
+      "trait.void": "VOID",
+      "trait.bruiser": "BRUISER",
+      "trait.longshot": "LONGSHOT",
+      "stage.early.badge": "STAGE 2-3",
+      "stage.early.title": "Early Game",
+      "stage.mid.badge": "STAGE 4",
+      "stage.mid.title": "Mid Game",
+      "stage.late.badge": "STAGE 5+",
+      "stage.late.title": "Late Game",
+      "stage.early.b1": "<strong>Slam items aggressively</strong> \u2014 don't save components",
+      "stage.early.b2": "<em>Play for winstreak</em> to build gold interest buffer",
+      "stage.early.b3": "Run Kog'Maw + Malzahar + Rek'Sai as core",
+      "stage.early.b4": "Keep strongest available board \u2014 don't force economy at cost of HP",
+      "unlock.rift.title": "\uD83C\uDF00 RIFT HERALD UNLOCK",
+      "unlock.rift.b1": "Have <strong>Void active</strong> for <strong>8 player combats</strong>",
+      "unlock.rift.b2": "No level requirement \u2014 auto-unlocks after 8 Void combats",
+      "unlock.rift.b3": "<strong>2 Void units</strong> already activate the trait \u2014 get them on board ASAP to start the 8-combat counter",
+      "stage.mid.b1": "Roll on <strong>Level 8</strong> for key 2-stars",
+      "stage.mid.b2": "Priority: <em>Kai'Sa 2\u2605</em> first, then <em>Rift Herald 2\u2605</em>",
+      "stage.mid.b3": "Push to <strong>Level 9</strong> after stabilizing",
+      "stage.mid.b4": "Flex <em>Swain</em> or <em>Shyvana</em> if available",
+      "stage.mid.b5": "Never roll below 10g \u2014 interest matters",
+      "unlock.kaisa.title": "\uD83D\uDD13 KAI'SA UNLOCK",
+      "unlock.kaisa.b1": "Reach <strong>Level 7</strong>",
+      "unlock.kaisa.b2": "Have a <strong>Longshot</strong> unit on board with <em>3 items equipped</em>",
+      "unlock.kaisa.b3": "Both conditions met \u2192 Kai'Sa unlocks automatically",
+      "unlock.voli.title": "\u26A1 VOLIBEAR UNLOCK",
+      "unlock.voli.b1": "Reach <strong>Level 8</strong>",
+      "unlock.voli.b2": "Have a unit that starts combat with at least <strong>3800 HP</strong>",
+      "unlock.voli.b3": "Tip: Rift Herald or Cho'Gath with tank items easily hit this threshold",
+      "stage.late.b1": "Full <strong>9 Void + Bruiser</strong> board active",
+      "stage.late.b2": "Wukong \u2192 <em>Volibear</em> slot for Bruiser trait",
+      "stage.late.b3": "Push <strong>Level 10</strong> when carry is itemized",
+      "stage.late.b4": "Slot in <em>Baron Nashor</em> as capstone unit",
+      "unlock.baron.title": "\uD83D\uDC51 BARON NASHOR UNLOCK",
+      "unlock.baron.b1": "Reach <strong>Level 10</strong>",
+      "unlock.baron.b2": "Field <strong>7 unique Void units</strong> simultaneously",
+      "unlock.baron.b3": "Baron counts as <strong>2 team slots</strong> \u2014 plan your roster accordingly",
+      "unlock.baron.b4": "Tip: Transfer your best items to Baron immediately after unlocking",
+      "board.lvl4.sub": "Early Opener",
+      "board.lvl6.sub": "Early",
+      "board.lvl8.sub": "Stable",
+      "board.lvl9.sub": "Roll for Kai'Sa \u2B50\u2B50 \u2014 Baron comes on Lvl 10",
+      "board.lvl10.sub": "Full Cap",
+      "board.lvl4.note": "2 Void active \u2014 start the Rift Herald counter",
+      "board.lvl6.note": "4 Void active \u2014 Rift Herald counter running",
+      "board.lvl8.note": "6 Void active \u2014 Rift Herald unlocked",
+      "board.lvl9.note": "ROLL FOR KAI'SA \u2B50\u2B50 \u2014 BARON COMES ON LVL 10",
+      "board.lvl10.note": "BARON NASHOR JOINS FRONT LINE",
+      "items.kaisa.sub": "HYBRID CARRY BUILD",
+      "items.baron.sub": "AD CARRY / BRUISER",
+      "items.herald.sub": "TANK / BRUISER BUILD",
+      "items.belveth.sub": "SLAYER BUILD",
+      "win.title": "PUSH TO LEVEL 10",
+      "win.sub": "Baron Nashor \u2014 The Ultimate Carry",
+      "lvl.4.cond": "Level up if you have upgrades and a good item",
+      "lvl.5.cond": "Always, unless on 3\u00D7 loss streak",
+      "lvl.6.cond": "4+ winstreak OR stay above 40g",
+      "lvl.7.cond": "If you can stay above 30g",
+      "lvl.8.cond": "Roll for Kai'Sa \u2B50\u2B50 + Rift Herald \u2B50\u2B50",
+      "lvl.9.cond": "High HP: wait until 5-5 | Low HP: go ASAP",
+      "lvl.10.cond": "Carry itemized + upgraded \u2192 Baron online",
+    },
+    de: {
+      "hero.scroll": "SCROLLEN UM FORTZUFAHREN",
+      "section.champions": "CHAMPIONS",
+      "section.leveling": "LEVEL-GUIDE",
+      "section.positioning": "POSITIONIERUNG",
+      "section.stages": "STAGE-\u00DCBERSICHT",
+      "section.items": "ITEMS & MUTATIONEN",
+      "trait.void": "VOID",
+      "trait.bruiser": "BRUISER",
+      "trait.longshot": "WEITSCHUSS",
+      "stage.early.badge": "STAGE 2-3",
+      "stage.early.title": "Fr\u00FChes Spiel",
+      "stage.mid.badge": "STAGE 4",
+      "stage.mid.title": "Mittelspiel",
+      "stage.late.badge": "STAGE 5+",
+      "stage.late.title": "Sp\u00E4tes Spiel",
+      "stage.early.b1": "<strong>Items sofort einbauen</strong> \u2014 keine Komponenten horten",
+      "stage.early.b2": "<em>Auf Winstreak spielen</em> um Goldinteresse aufzubauen",
+      "stage.early.b3": "Kog'Maw + Malzahar + Rek'Sai als Kernkombo",
+      "stage.early.b4": "St\u00E4rkstes Board spielen \u2014 Economy nicht auf Kosten von HP forcen",
+      "unlock.rift.title": "\uD83C\uDF00 RIFT HERALD FREISCHALTEN",
+      "unlock.rift.b1": "<strong>Void aktiv</strong> f\u00FCr <strong>8 Spielk\u00E4mpfe</strong>",
+      "unlock.rift.b2": "Kein Level-Requirement \u2014 schaltet nach 8 Void-K\u00E4mpfen automatisch frei",
+      "unlock.rift.b3": "<strong>2 Void-Units</strong> aktivieren den Trait bereits \u2014 so fr\u00FCh wie m\u00F6glich auf das Board bringen",
+      "stage.mid.b1": "Rollen auf <strong>Level 8</strong> f\u00FCr wichtige 2-Sterne",
+      "stage.mid.b2": "Priorit\u00E4t: <em>Kai'Sa 2\u2605</em> zuerst, dann <em>Rift Herald 2\u2605</em>",
+      "stage.mid.b3": "Nach dem Stabilisieren auf <strong>Level 9</strong> pushen",
+      "stage.mid.b4": "<em>Swain</em> oder <em>Shyvana</em> als Flex wenn verf\u00FCgbar",
+      "stage.mid.b5": "Nie unter 10g rollen \u2014 Zinsen sind wichtig",
+      "unlock.kaisa.title": "\uD83D\uDD13 KAI'SA FREISCHALTEN",
+      "unlock.kaisa.b1": "<strong>Level 7</strong> erreichen",
+      "unlock.kaisa.b2": "Eine <strong>Weitschuss</strong>-Unit mit <em>3 Items ausr\u00FCstet</em> auf dem Board haben",
+      "unlock.kaisa.b3": "Beide Bedingungen erf\u00FCllt \u2192 Kai'Sa schaltet automatisch frei",
+      "unlock.voli.title": "\u26A1 VOLIBEAR FREISCHALTEN",
+      "unlock.voli.b1": "<strong>Level 8</strong> erreichen",
+      "unlock.voli.b2": "Eine Unit haben, die mit mindestens <strong>3800 HP</strong> in den Kampf startet",
+      "unlock.voli.b3": "Tipp: Rift Herald oder Cho'Gath mit Tank-Items erreichen das leicht",
+      "stage.late.b1": "Volles <strong>9 Void + Bruiser</strong> Board aktiv",
+      "stage.late.b2": "Wukong \u2192 <em>Volibear</em> Slot f\u00FCr Bruiser-Trait",
+      "stage.late.b3": "Auf <strong>Level 10</strong> pushen wenn Carry itemisiert ist",
+      "stage.late.b4": "<em>Baron Nashor</em> als Cap-Unit einsetzen",
+      "unlock.baron.title": "\uD83D\uDC51 BARON NASHOR FREISCHALTEN",
+      "unlock.baron.b1": "<strong>Level 10</strong> erreichen",
+      "unlock.baron.b2": "<strong>7 einzigartige Void-Units</strong> gleichzeitig aufstellen",
+      "unlock.baron.b3": "Baron z\u00E4hlt als <strong>2 Team-Slots</strong> \u2014 Roster entsprechend planen",
+      "unlock.baron.b4": "Tipp: Beste Items sofort nach dem Freischalten auf Baron transferieren",
+      "board.lvl4.sub": "Fr\u00FCher Opener",
+      "board.lvl6.sub": "Fr\u00FCh",
+      "board.lvl8.sub": "Stabilisieren",
+      "board.lvl9.sub": "F\u00FCr Kai'Sa 2\u2605 rollen \u2014 Baron kommt auf Lvl 10",
+      "board.lvl10.sub": "Volles Cap",
+      "board.lvl4.note": "2 Void aktiv \u2014 Rift Herald Z\u00E4hler starten",
+      "board.lvl6.note": "4 Void aktiv \u2014 Rift Herald Z\u00E4hler l\u00E4uft",
+      "board.lvl8.note": "6 Void aktiv \u2014 Rift Herald freigeschaltet",
+      "board.lvl9.note": "F\u00DCR KAI'SA 2\u2605 ROLLEN \u2014 BARON KOMMT AUF LVL 10",
+      "board.lvl10.note": "BARON NASHOR BETRITT DIE FRONTLINIE",
+      "items.kaisa.sub": "HYBRID-CARRY BUILD",
+      "items.baron.sub": "AD CARRY / BRUISER",
+      "items.herald.sub": "TANK / BRUISER BUILD",
+      "items.belveth.sub": "SLAYER BUILD",
+      "win.title": "AUF LEVEL 10 PUSHEN",
+      "win.sub": "Baron Nashor \u2014 Der ultimative Carry",
+      "lvl.4.cond": "Level up wenn du Upgrades und ein gutes Item hast",
+      "lvl.5.cond": "Immer, au\u00DFer bei 3\u00D7 Lossstreak",
+      "lvl.6.cond": "4+ Winstreak ODER \u00FCber 40g bleiben",
+      "lvl.7.cond": "Wenn du \u00FCber 30g bleiben kannst",
+      "lvl.8.cond": "F\u00FCr Kai'Sa 2\u2605 + Rift Herald 2\u2605 rollen",
+      "lvl.9.cond": "Viel HP: bis 5-5 warten | Wenig HP: so fr\u00FCh wie m\u00F6glich",
+      "lvl.10.cond": "Carry itemisiert + upgraded \u2192 Baron online",
+    }
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'en';
+
+  function setElContent(el, html) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+    el.insertAdjacentHTML('afterbegin', html);
+  }
+
+  function applyLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key] !== undefined) {
+        setElContent(el, translations[lang][key]);
+      }
+    });
+    var btn = document.getElementById('lang-toggle');
+    if (btn) setElContent(btn, lang === 'en' ? '\uD83C\uDDE9\uD83C\uDDEA DE' : '\uD83C\uDDEC\uD83C\uDDE7 EN');
+  }
+
+  function toggleLang() {
+    applyLang(currentLang === 'en' ? 'de' : 'en');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() { applyLang(currentLang); });
+</script>
+</body>
+</html>
